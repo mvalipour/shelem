@@ -8,7 +8,7 @@
     Participants:
     <ul>
       <% @game.participants.each do |uid, hash| %>
-        <li><%= hash[:name] %></li>
+        <li><%= hash.name %></li>
       <% end %>
     </ul>
   </p>
@@ -34,6 +34,6 @@
   <% end %>
 
   <% if @game.started? %>
-    Your role: <%= @participant[:role] %>
+    Your role: <%= @participant.role %>
   <% end %>
 <% end %>
