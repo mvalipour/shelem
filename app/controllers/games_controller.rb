@@ -34,9 +34,7 @@ class GamesController < ApplicationController
   private
 
   def ensure_admin!
-    unless participant.admin
-      render status: :unauthorized
-    end
+    render status: :unauthorized unless participant.admin
   end
 
   def game
