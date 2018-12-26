@@ -1,0 +1,7 @@
+<h1>What is your name?</h1>
+
+<%= form_tag return_to: params[:return_to] do %>
+  <input id="name" name="name" type="text" auto_complete="given-name" />
+
+  <%= submit_tag("Go!") %>
+<% end %>

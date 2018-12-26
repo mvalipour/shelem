@@ -1,0 +1,35 @@
+<h1>Hey! this is your game!</h1>
+
+<p>Link: <a href=<%= game_url(@game.uid) %>>Share link</a></p>
+
+
+<% if @is_admin %>
+  <p>
+    Participants:
+    <ul>
+      <% @game.participants.each do |uid, hash| %>
+        <li><%= hash[:name] %></li>
+      <% end %>
+    </ul>
+  </p>
+
+  <% if @game.not_started? %>
+    <%= form_with scope: :game, url: game_start_path(@game.uid), local: true do %>
+      <%= submit_tag("Start!") %>
+    <% end %>
+  <% end %>
+
+  <% if @game.started? %>
+    <%= form_with scope: :game, url: game_finish_path(@game.uid), local: true do %>
+      <%= submit_tag("Finish!") %>
+    <% end %>
+  <% end %>
+<% else %>
+  <% if @game.not_started? %>
+    Game has not started yet!
+  <% end %>
+
+  <% if @game.started? %>
+    Your role: <%= @participant[:role] %>
+  <% end %>
+<% end %>
