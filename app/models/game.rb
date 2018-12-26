@@ -11,6 +11,11 @@ class Game < ApplicationRecord
     @_participants ||= (participants_blob ? JSON.parse(participants_blob).with_indifferent_access : {})
   end
 
+  def add_participant!(user_uid, user_name)
+    add_participant(user_uid, user_name)
+    save!
+  end
+
   def add_participant(user_uid, user_name)
     return if participants.key?(user_uid)
     # todo raise if max capacity

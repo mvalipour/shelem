@@ -3,14 +3,9 @@ class GamesController < ApplicationController
   before_action :ensure_admin!, only: [:start, :finish]
 
   def show
-    game.tap do |game|
-      game.add_participant(user_uid, user_name)
-      game.save!
-
-      @game = game
-      @is_admin = (game.admin_uid == user_uid)
-      @participant = game.participants[user_uid]
-    end
+    @game = game
+    @is_admin = (game.admin_uid == user_uid)
+    @participant = game.participants[user_uid]
   end
 
   def create
@@ -19,6 +14,11 @@ class GamesController < ApplicationController
       game.save!
     end
 
+    redirect_to game_path(game.uid)
+  end
+
+  def join
+    game.add_participant!(user_uid, user_name)
     redirect_to game_path(game.uid)
   end
 
