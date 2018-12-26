@@ -17,16 +17,19 @@ class Game < ApplicationRecord
     end
   end
 
-  def add_participant!(user_uid, user_name)
-    add_participant(user_uid, user_name)
+  def add_participant!(user_uid, user_name, admin: false)
+    add_participant(user_uid, user_name, admin: admin)
     save!
   end
 
-  def add_participant(user_uid, user_name)
+  def add_participant(user_uid, user_name, admin: false)
     return if participants.key?(user_uid)
     # todo raise if max capacity
 
-    participants[user_uid] = Participant.new(name: user_name)
+    participants[user_uid] = Participant.new(
+      name: user_name,
+      admin: admin
+    )
   end
 
   def started!

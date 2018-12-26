@@ -4,13 +4,12 @@ class GamesController < ApplicationController
 
   def show
     @game = game
-    @is_admin = (game.admin_uid == user_uid)
-    @participant = game.participants[user_uid]
+    @participant = participant
   end
 
   def create
-    game = Game.new(admin_uid: user_uid).tap do |game|
-      game.add_participant(user_uid, user_name)
+    game = Game.new.tap do |game|
+      game.add_participant(user_uid, user_name, admin: true)
       game.save!
     end
 
@@ -35,13 +34,17 @@ class GamesController < ApplicationController
   private
 
   def ensure_admin!
-    if game.admin_uid != user_uid
+    unless participant.admin
       render status: :unauthorized
     end
   end
 
   def game
     @_game ||= Game.find_by!(uid: params[:game_id] || params.require(:id))
+  end
+
+  def participant
+    @_participant ||= game.participants[user_uid]
   end
 
   def ensure_user_uid
