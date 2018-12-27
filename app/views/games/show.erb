@@ -2,7 +2,6 @@
 
 <p>Link: <a href=<%= game_url(@game.uid) %>>Share link</a></p>
 
-
 <% if !@participant %>
   <%= form_with scope: :game, url: game_join_path(@game.uid), local: true do %>
     <%= submit_tag("Join!") %>

@@ -1,14 +1,15 @@
+<% content_for :head do %>
+  <script src='https://www.google.com/recaptcha/api.js'></script>
+<% end %>
+
+<script>
+  function recaptchaCallback() {
+    document.forms[0].submit()
+  }
+</script>
+
 <h1>Start a new game!</h1>
 
 <%= form_with scope: :game, url: games_path, local: true do %>
-  <label>
-    <input id="age_child" name="age" type="radio" value="child" />
-    Child
-  </label>
-  <label>
-    <input id="age_child" name="age" type="radio" value="addd" />
-    Addd
-  </label>
-
-  <%= submit_tag("Go!") %>
+  <div class="g-recaptcha" data-callback="recaptchaCallback" data-sitekey="6Ld4-4QUAAAAAGgxztfG-SBFdOtsuwQVFAJrnOSP"></div>
 <% end %>
