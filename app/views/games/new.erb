@@ -1,5 +1,5 @@
 <% content_for :head do %>
-  <script src='https://www.google.com/recaptcha/api.js'></script>
+  <script src='https://www.google.com/recaptcha/api.js?hl=fa'></script>
 <% end %>
 
 <script>
@@ -8,8 +8,10 @@
   }
 </script>
 
-<h1>Start a new game!</h1>
+<h2>
+  <%= t('start_new_game.title') %>
+</h2>
 
 <%= form_with scope: :game, url: games_path, local: true do %>
-  <div class="g-recaptcha" data-callback="recaptchaCallback" data-sitekey="6Ld4-4QUAAAAAGgxztfG-SBFdOtsuwQVFAJrnOSP"></div>
+  <div class="g-recaptcha" data-callback="recaptchaCallback" data-sitekey="6Ld6-4QUAAAAAPwveKtRuETsYJIy8MdCxhvKZpmY"></div>
 <% end %>

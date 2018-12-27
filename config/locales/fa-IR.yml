@@ -1,0 +1,14 @@
+en:
+  title: کلانتر
+  home_page:
+    title: سلام
+    start_new_game: شروع یه بازی جدید
+  start_new_game:
+    title: شروع یه بازی جدید
+  show_game:
+    title: بازی شما
+    share_link: لینک اشتراک
+    participants: شرکت کننده ها
+    start: شروع بازی
+    finish: پایان بازی
+    restart: یه دور جدید

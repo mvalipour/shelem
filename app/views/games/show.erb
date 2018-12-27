@@ -1,6 +1,12 @@
-<h1>Hey! this is your game!</h1>
+<h2>
+  <%= t('show_game.title') %>
+</h2>
 
-<p>Link: <a href=<%= game_url(@game.uid) %>>Share link</a></p>
+<p>
+  <%= t('show_game.share_link') %>
+
+  <input type='text' disabled='disabled' value='<%= game_url(@game.uid) %>' />
+</p>
 
 <% if !@participant %>
   <%= form_with scope: :game, url: game_join_path(@game.uid), local: true do %>
@@ -8,7 +14,7 @@
   <% end %>
 <% elsif @participant.admin %>
   <p>
-    Participants:
+    <%= t('show_game.participants') %>
     <ul>
       <% @game.participants.each do |uid, hash| %>
         <li><%= hash.name %></li>
@@ -18,13 +24,15 @@
 
   <% if @game.not_started? %>
     <%= form_with scope: :game, url: game_start_path(@game.uid), local: true do %>
-      <%= submit_tag("Start!") %>
+      <%= submit_tag(t('show_game.start')) %>
     <% end %>
-  <% end %>
-
-  <% if @game.started? %>
+  <% elsif @game.started? %>
     <%= form_with scope: :game, url: game_finish_path(@game.uid), local: true do %>
-      <%= submit_tag("Finish!") %>
+      <%= submit_tag(t('show_game.finish')) %>
+    <% end %>
+  <% elsif @game.finished? %>
+    <%= form_with scope: :game, url: game_start_path(@game.uid), local: true do %>
+      <%= submit_tag(t('show_game.restart')) %>
     <% end %>
   <% end %>
 <% else %>
