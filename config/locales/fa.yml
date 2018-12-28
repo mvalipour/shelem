@@ -1,5 +1,5 @@
 fa:
-  title: کلانتر
+  title: جاسوس باز!
   home_page:
     title: سلام
     start_new_game: شروع یه بازی جدید
@@ -8,7 +8,19 @@ fa:
   show_game:
     title: بازی شما
     share_link: لینک اشتراک
+    copy_link: کپی
     participants: شرکت کننده ها
     start: شروع بازی
     finish: پایان بازی
     restart: یه دور جدید
+    join: وارد بازی شو
+    not_started: بازی هنوز شروع نشده
+    your_role: نقش شما
+    number_of_spies: تعداد جاسوس ها
+    location: مکان
+  user_name:
+    title: اسم شما
+    submit: ادامه
+
+  roles:
+    spy: جاسوس

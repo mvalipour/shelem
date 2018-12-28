@@ -17,6 +17,10 @@ class Game < ApplicationRecord
     end
   end
 
+  def number_of_spies
+    [(participants.size/4.0).floor + 1, 3].min
+  end
+
   def add_participant!(user_uid, user_name, admin: false)
     add_participant(user_uid, user_name, admin: admin)
     save!
@@ -34,11 +38,13 @@ class Game < ApplicationRecord
 
   def started!
     location, roles = ALL_LOCATIONS.to_a.sample
-    roles.shuffle!
+    number_of_citizens = participants.size - number_of_spies
+    roles = (roles.shuffle.slice(0, number_of_citizens) + ([:spy] * number_of_spies)).shuffle
     participants.each_with_index do |(_, p), ix|
       p.role = roles[ix]
     end
 
+    assign_attributes(location: location)
     super
   end
 

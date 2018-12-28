@@ -10,6 +10,8 @@ gem 'pry-rails'
 
 gem 'pg', '>= 0.18', '< 2.0'
 
+gem 'webpacker', '~> 3.5'
+
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
 # Use SCSS for stylesheets

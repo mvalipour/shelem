@@ -3,21 +3,39 @@
 </h2>
 
 <p>
-  <%= t('show_game.share_link') %>
+  <label>
+    <%= t('show_game.share_link') %>
+  </label>
 
-  <input type='text' disabled='disabled' value='<%= game_url(@game.uid) %>' />
+  <input id='foo' type='text' readonly='true' value='<%= game_url(@game.uid) %>' />
+  <button class="clipboard-btn" data-clipboard-target="#foo">
+    <%= t('show_game.copy_link') %>
+  </button>
 </p>
 
 <% if !@participant %>
   <%= form_with scope: :game, url: game_join_path(@game.uid), local: true do %>
-    <%= submit_tag("Join!") %>
+    <%= submit_tag(t('show_game.join')) %>
   <% end %>
 <% elsif @participant.admin %>
   <p>
-    <%= t('show_game.participants') %>
-    <ul>
-      <% @game.participants.each do |uid, hash| %>
-        <li><%= hash.name %></li>
+    <label>
+      <%= t('show_game.participants') %>
+      <span class='secondary'>
+        &mdash; <%= t('show_game.number_of_spies') %>: <%= @game.number_of_spies %>
+      </span>
+    </label>
+    <% if @game.finished? %>
+      <%= t('show_game.location') %>: <%= t("locations.#{@game.location}") %>
+    <% end %>
+    <ul class='participants'>
+      <% @game.participants.each do |uid, participant| %>
+        <li>
+          <label><%= participant.name %></label>
+          <% if @game.finished? %>
+            <label class='desc'><%= t("roles.#{participant.role}") %></label>
+          <% end %>
+        </li>
       <% end %>
     </ul>
   </p>
@@ -37,10 +55,11 @@
   <% end %>
 <% else %>
   <% if @game.not_started? %>
-    Game has not started yet!
+    <%= t('show_game.not_started') %>
   <% end %>
 
   <% if @game.started? %>
-    Your role: <%= @participant.role %>
+    <%= t('show_game.your_role') %>
+    <%= @participant.role %>
   <% end %>
 <% end %>
