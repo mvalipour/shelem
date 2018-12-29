@@ -7,6 +7,10 @@ body {
   padding: 1em;
 }
 
+h1 img {
+  vertical-align: middle;
+}
+
 .secondary {
   color: #ccc;
 }
