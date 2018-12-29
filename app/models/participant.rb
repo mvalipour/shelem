@@ -1,5 +1,5 @@
 class Participant
-  PROPS = %i(name role admin present)
+  PROPS = %i(uid name role admin present)
 
   include ActiveModel::Model
 

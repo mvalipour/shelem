@@ -31,6 +31,7 @@ class Game < ApplicationRecord
     # todo raise if max capacity
 
     participants[user_uid] = Participant.new(
+      uid: user_uid,
       name: user_name,
       admin: admin,
       present: true

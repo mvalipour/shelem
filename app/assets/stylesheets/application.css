@@ -65,11 +65,16 @@ ul.participants {
 }
 ul.participants li {
   display: inline-block;
-  padding: 3em 2em 0.5em;
-  border: solid 2px #ddd;
+  padding: .25em;
+  border: solid 3px #ddd;
   border-radius: 5px;
   margin: 0 0 1em 1em;
   text-align: center;
+}
+
+ul.participants li.present {
+  border: solid 3px #84ca84;
+  box-shadow: gold 0px 0px 10px;
 }
 
 ul.participants li .desc {
