@@ -5,4 +5,8 @@ class GameSerializer < ActiveModel::Serializer
   def participants
     object.participants.values.map(&:to_h)
   end
+
+  def location
+    I18n.t("locations.#{object.location}")
+  end
 end

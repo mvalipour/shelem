@@ -66,8 +66,13 @@
       <%= t('show_game.not_started') %>
     </p>
 
+    <p>
+      <%= t('show_game.location') %>:
+      {{ location }}
+    </p>
+
     <p v-if="status == 'started'">
-      <%= t('show_game.your_role') %>
+      <%= t('show_game.your_role') %>:
       {{ my_role }}
     </p>
   </div>
