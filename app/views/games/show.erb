@@ -1,3 +1,7 @@
+<% content_for :head do %>
+  <meta name="game-uid" content="<%= @game.uid %>">
+<% end %>
+
 <h2>
   <%= t('show_game.title') %>
 </h2>
@@ -32,6 +36,7 @@
       <% @game.participants.each do |uid, participant| %>
         <li>
           <label><%= participant.name %></label>
+          <label><%= participant.present ? 'in' : 'out' %></label>
           <% if @game.finished? %>
             <label class='desc'><%= t("roles.#{participant.role}") %></label>
           <% end %>
