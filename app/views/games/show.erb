@@ -1,5 +1,9 @@
 <% content_for :head do %>
   <meta name="game-uid" content="<%= @game.uid %>">
+
+  <% if @participant&.admin %>
+    <meta name="vue-data" content="<%= @view_data.to_json %>">
+  <% end %>
 <% end %>
 
 <h2>
@@ -22,28 +26,26 @@
     <%= submit_tag(t('show_game.join')) %>
   <% end %>
 <% elsif @participant.admin %>
-  <p>
+  <div id='vue-app'>
     <label>
       <%= t('show_game.participants') %>
       <span class='secondary'>
-        &mdash; <%= t('show_game.number_of_spies') %>: <%= @game.number_of_spies %>
+        &mdash; <%= t('show_game.number_of_spies') %>: {{ number_of_spies }}
       </span>
     </label>
-    <% if @game.finished? %>
+
+    <div v-if="status == 'finished'">
       <%= t('show_game.location') %>: <%= t("locations.#{@game.location}") %>
-    <% end %>
+    </div>
+
     <ul class='participants'>
-      <% @game.participants.each do |uid, participant| %>
-        <li>
-          <label><%= participant.name %></label>
-          <label><%= participant.present ? 'in' : 'out' %></label>
-          <% if @game.finished? %>
-            <label class='desc'><%= t("roles.#{participant.role}") %></label>
-          <% end %>
-        </li>
-      <% end %>
+      <li v-for="participant in participants">
+        <label>{{ participant.name }}</label>
+        <label>{{ participant.present ? 'in' : 'out' }}</label>
+        <label v-if="status == 'finished'" class='desc'>{{ participant.role }}</label>
+      </li>
     </ul>
-  </p>
+  <div>
 
   <% if @game.not_started? %>
     <%= form_with scope: :game, url: game_start_path(@game.uid), local: true do %>

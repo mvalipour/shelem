@@ -1,5 +1,6 @@
 require('stylesheets');
 require('javascripts/cable')
+require('javascripts/vue')
 
 const ready = require('javascripts/ready')
 

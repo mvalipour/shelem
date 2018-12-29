@@ -5,6 +5,7 @@ class GamesController < ApplicationController
   def show
     @game = game
     @participant = participant
+    @view_data = GameSerializer.new(game)
   end
 
   def create

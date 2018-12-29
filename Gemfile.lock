@@ -24,6 +24,11 @@ GEM
       erubi (~> 1.4)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.0, >= 1.0.3)
+    active_model_serializers (0.10.8)
+      actionpack (>= 4.1, < 6)
+      activemodel (>= 4.1, < 6)
+      case_transform (>= 0.2)
+      jsonapi-renderer (>= 0.1.1.beta1, < 0.3)
     activejob (5.2.2)
       activesupport (= 5.2.2)
       globalid (>= 0.3.6)
@@ -60,6 +65,8 @@ GEM
       rack-test (>= 0.6.3)
       regexp_parser (~> 1.2)
       xpath (~> 3.2)
+    case_transform (0.2)
+      activesupport
     childprocess (0.9.0)
       ffi (~> 1.0, >= 1.0.11)
     chromedriver-helper (2.1.0)
@@ -86,6 +93,7 @@ GEM
     jbuilder (2.8.0)
       activesupport (>= 4.2.0)
       multi_json (>= 1.2)
+    jsonapi-renderer (0.2.0)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -206,6 +214,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  active_model_serializers (~> 0.10.2)
   bootsnap (>= 1.1.0)
   byebug
   capybara (>= 2.15)
