@@ -11,7 +11,7 @@ class Game < ApplicationRecord
     @_participants ||= begin
       participants_blob ?
         JSON.parse(participants_blob)
-          .transform_values { |v| Participant.new(**v.symbolize_keys) }
+          .map { |uid, v| [uid, Participant.new(**v.symbolize_keys.merge(uid: uid))] }
           .to_h :
         {}
     end
@@ -31,7 +31,6 @@ class Game < ApplicationRecord
     # todo raise if max capacity
 
     participants[user_uid] = Participant.new(
-      uid: user_uid,
       name: user_name,
       admin: admin,
       present: true
@@ -40,17 +39,22 @@ class Game < ApplicationRecord
 
   def started!
     location, roles = ALL_LOCATIONS.to_a.sample
-    number_of_citizens = participants.size - number_of_spies
-    roles = (roles.shuffle.slice(0, number_of_citizens) + ([:spy] * number_of_spies)).shuffle
-    participants.each_with_index do |(_, p), ix|
-      p.role = roles[ix]
-    end
 
+    number_of_citizens = participants.size - number_of_spies
+    rolls = (number_of_citizens / roles.size.to_f).ceil
+    roles = ((roles * rolls).shuffle.slice(0, number_of_citizens) + ([:spy] * number_of_spies)).shuffle
+
+    participants.values.each { |p| p.role = roles.shift }
     assign_attributes(location: location)
+
     super
   end
 
   private
+
+  def method_name
+
+  end
 
   def serialize_participants
     assign_attributes(participants_blob: participants.transform_values(&:to_h).to_json)

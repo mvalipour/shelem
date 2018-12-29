@@ -25,16 +25,17 @@ fa:
 
   roles:
     spy: جاسوس
-    a: الف
-    b: ب
-    c: ج
-    d: د
-    e: ه
-    1: یک
-    2: دو
-    3: سه
-    4: چهار
-    5: پنج
+    head_teacher: مدیر مدرسه
+    teacher: معلم
+    parent: اولیا
+    student: دانش آموز
+    doorman: سرایدار
+    manager: مدیر
+    chef: سرآشپز
+    waiter: گارسون
+    waitress: گارسون
+    next_table: میز بغلی
+
   locations:
-    foo: فو
-    bar: بار
+    school: مدرسه
+    restaurant: رستوران
