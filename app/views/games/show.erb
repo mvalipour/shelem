@@ -7,45 +7,14 @@
   <% end %>
 <% end %>
 
-<h2>
-  <%= t('show_game.title') %>
-</h2>
-
 <% if !@participant %>
   <%= form_with scope: :game, url: game_join_path(@game.uid), local: true do %>
     <%= submit_tag(t('show_game.join')) %>
   <% end %>
 <% elsif @participant.admin %>
-  <div>
-    <label>
-      <%= t('show_game.share_link') %>
-    </label>
-    <input id='foo' type='text' readonly='true' value='<%= game_url(@game.uid) %>' />
-    <button class="clipboard-btn" data-clipboard-target="#foo">
-      <%= t('show_game.copy_link') %>
-    </button>
-  </div>
-
-  <div id='vue-app'>
-    <label>
-      <%= t('show_game.participants') %>
-      <span class='secondary'>
-        &mdash; <%= t('show_game.number_of_spies') %>: {{ number_of_spies }}
-      </span>
-    </label>
-
-    <div v-if="status == 'finished'">
-      <%= t('show_game.location') %>: <%= t("locations.#{@game.location}") %>
-    </div>
-
-    <ul class='participants'>
-      <li v-for="participant in participants" v-bind:class="{ present: participant.present }">
-        <img v-bind:src='"https://api.adorable.io/avatars/64/"+participant.uid+".png"' />
-        <label>{{ participant.name }}</label>
-        <label v-if="status == 'finished'" class='desc'>{{ participant.role }}</label>
-      </li>
-    </ul>
-  <div>
+  <h4>
+    <%= t('show_game.game_control') %>
+  </h4>
 
   <% if @game.not_started? %>
     <%= form_with scope: :game, url: game_start_path(@game.uid), local: true do %>
@@ -60,7 +29,44 @@
       <%= submit_tag(t('show_game.restart')) %>
     <% end %>
   <% end %>
+
+  <div>
+    <h4>
+      <%= t('show_game.share_link') %>
+    </h4>
+
+    <div class='share-link'>
+      <input id='foo' type='text' readonly='true' value='<%= game_url(@game.uid) %>' />
+      <button class="clipboard-btn" data-clipboard-target="#foo">
+        <%= t('show_game.copy_link') %>
+      </button>
+    </div>
+  </div>
+
+  <div id='vue-app'>
+    <h4>
+      <%= t('show_game.participants') %>
+      <span class='secondary'>
+        &mdash; <%= t('show_game.number_of_spies') %>: {{ number_of_spies }}
+      </span>
+    </h4>
+
+    <div v-if="status == 'finished'">
+      <%= t('show_game.location') %>: <%= t("locations.#{@game.location}") %>
+    </div>
+
+    <ul class='participants'>
+      <li v-for="participant in participants" v-bind:class="{ present: participant.present }">
+        <img v-bind:src='"https://api.adorable.io/avatars/64/"+participant.uid+".png"' />
+        <label>{{ participant.name }}</label>
+        <label v-if="status == 'finished'" class='desc'>{{ participant.role }}</label>
+      </li>
+    </ul>
+  <div>
 <% else %>
+  <h2>
+    <%= t('show_game.title') %>
+  </h2>
   <div id='vue-app'>
     <p v-if="status == 'not_started'">
       <%= t('show_game.not_started') %>

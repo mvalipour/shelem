@@ -17,7 +17,7 @@ h1 img {
 
 input[type=submit], a.button, button {
   display: inline-block;
-  padding: 0.8em 1em;
+  padding: 0.7em 1em;
   background: tomato;
   color: white;
   text-decoration: none;
@@ -51,8 +51,14 @@ label {
   display: block;
 }
 
-#foo {
-  width: 25em;
+.share-link {
+  position: relative;
+}
+
+.share-link button {
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
 input[type=text][readonly] {
@@ -72,7 +78,7 @@ ul.participants li {
   padding: .25em;
   border: solid 3px #ddd;
   border-radius: 5px;
-  margin: 0 0 1em 1em;
+  margin: 0 0 0.7em 0.7em;
   text-align: center;
   filter: opacity(0.7) grayscale(1);
 }

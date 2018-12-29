@@ -7,6 +7,7 @@ fa:
     title: شروع یه بازی جدید
   show_game:
     title: بازی شما
+    game_control: کنترل بازی
     share_link: لینک اشتراک
     copy_link: کپی
     participants: شرکت کننده ها
