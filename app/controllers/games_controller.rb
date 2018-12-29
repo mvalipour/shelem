@@ -2,7 +2,8 @@ class GamesController < ApplicationController
   before_action :ensure_user_uid
   before_action :ensure_admin!, only: [:start, :finish]
 
-  after_action :publish_event, only: [:join]
+  after_action :publish_participant_event, only: [:join]
+  after_action :publish_status_event, only: [:start, :finish]
 
   def show
     @game = game
@@ -36,9 +37,11 @@ class GamesController < ApplicationController
 
   private
 
-  def publish_event
+  def publish_status_event; publish_event(:status) end
+  def publish_participant_event; publish_event(:participants) end
+  def publish_event(type)
     ActionCable.server.broadcast(
-      "game_#{game.uid}",
+      "game_#{type}_#{game.uid}",
       body: view_data
     )
   end
@@ -48,7 +51,9 @@ class GamesController < ApplicationController
   end
 
   def view_data
-    GameSerializer.new(game).to_json
+    GameSerializer.new(game).to_h.tap do |hash|
+      hash[:my_role] = participant.role if participant
+    end.to_json
   end
 
   def game

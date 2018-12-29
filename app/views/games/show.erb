@@ -1,7 +1,8 @@
 <% content_for :head do %>
   <meta name="game-uid" content="<%= @game.uid %>">
 
-  <% if @participant&.admin %>
+  <% if @participant %>
+    <meta name="game-activity-channel" content="<%= @participant.admin ? "AdminChannel" : "ParticipantChannel" %>">
     <meta name="vue-data" content="<%= @view_data %>">
   <% end %>
 <% end %>
@@ -10,24 +11,21 @@
   <%= t('show_game.title') %>
 </h2>
 
-<p>
-  <label>
-    <%= t('show_game.share_link') %>
-  </label>
-</p>
-
 <% if !@participant %>
   <%= form_with scope: :game, url: game_join_path(@game.uid), local: true do %>
     <%= submit_tag(t('show_game.join')) %>
   <% end %>
 <% elsif @participant.admin %>
   <div>
+    <label>
+      <%= t('show_game.share_link') %>
+    </label>
     <input id='foo' type='text' readonly='true' value='<%= game_url(@game.uid) %>' />
     <button class="clipboard-btn" data-clipboard-target="#foo">
       <%= t('show_game.copy_link') %>
     </button>
   </div>
-  
+
   <div id='vue-app'>
     <label>
       <%= t('show_game.participants') %>
@@ -63,12 +61,14 @@
     <% end %>
   <% end %>
 <% else %>
-  <% if @game.not_started? %>
-    <%= t('show_game.not_started') %>
-  <% end %>
+  <div id='vue-app'>
+    <p v-if="status == 'not_started'">
+      <%= t('show_game.not_started') %>
+    </p>
 
-  <% if @game.started? %>
-    <%= t('show_game.your_role') %>
-    <%= @participant.role %>
-  <% end %>
+    <p v-if="status == 'started'">
+      <%= t('show_game.your_role') %>
+      {{ my_role }}
+    </p>
+  </div>
 <% end %>

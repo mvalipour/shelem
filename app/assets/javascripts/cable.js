@@ -8,11 +8,13 @@ const ActionCable = require('actioncable');
   App.cable = ActionCable.createConsumer();
 }).call(window);
 
+function updateData(data) {
+  window.VUE_APP.changeData(JSON.parse(data.body));
+}
+
 ready(() => {
   const game_uid = meta('game-uid');
-  if(!game_uid) {
-    return;
-  }
+  if(!game_uid) { return; }
 
   App.cable.subscriptions.create({
     channel: "PresenceChannel",
@@ -20,16 +22,11 @@ ready(() => {
   });
 
   // admin
-  if(!meta('vue-data')) {
-    return;
-  }
+  const channel = meta('game-activity-channel')
+  if(!channel) { return; }
 
-  App.cable.subscriptions.create({
-    channel: "ActivityChannel",
-    game_uid: game_uid
-  }, {
-    received: data => {
-      window.VUE_APP.changeData(JSON.parse(data.body));
-    }
-  });
+  App.cable.subscriptions.create(
+    { channel: channel, game_uid: game_uid },
+    { received: updateData }
+  );
 });

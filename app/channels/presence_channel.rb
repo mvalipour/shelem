@@ -23,7 +23,7 @@ class PresenceChannel < ApplicationCable::Channel
 
   def publish_event(game)
     ActionCable.server.broadcast(
-      "game_#{game.uid}",
+      "game_participants_#{game.uid}",
       body: GameSerializer.new(game).to_json
     )
   end
