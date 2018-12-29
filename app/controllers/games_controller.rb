@@ -1,9 +1,10 @@
 class GamesController < ApplicationController
+  ADMIN_ACTIONS = %i(start finish restart)
   before_action :ensure_user_uid
-  before_action :ensure_admin!, only: [:start, :finish]
+  before_action :ensure_admin!, only: ADMIN_ACTIONS
 
   after_action :publish_participant_event, only: [:join]
-  after_action :publish_status_event, only: [:start, :finish]
+  after_action :publish_status_event, only: ADMIN_ACTIONS
 
   def show
     @game = game
@@ -32,6 +33,11 @@ class GamesController < ApplicationController
 
   def finish
     game.finished!
+    redirect_to game_path(game.uid)
+  end
+
+  def restart
+    game.not_started!
     redirect_to game_path(game.uid)
   end
 
