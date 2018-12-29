@@ -14,11 +14,6 @@
   <label>
     <%= t('show_game.share_link') %>
   </label>
-
-  <input id='foo' type='text' readonly='true' value='<%= game_url(@game.uid) %>' />
-  <button class="clipboard-btn" data-clipboard-target="#foo">
-    <%= t('show_game.copy_link') %>
-  </button>
 </p>
 
 <% if !@participant %>
@@ -26,6 +21,13 @@
     <%= submit_tag(t('show_game.join')) %>
   <% end %>
 <% elsif @participant.admin %>
+  <div>
+    <input id='foo' type='text' readonly='true' value='<%= game_url(@game.uid) %>' />
+    <button class="clipboard-btn" data-clipboard-target="#foo">
+      <%= t('show_game.copy_link') %>
+    </button>
+  </div>
+  
   <div id='vue-app'>
     <label>
       <%= t('show_game.participants') %>

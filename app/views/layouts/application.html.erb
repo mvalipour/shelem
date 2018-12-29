@@ -16,7 +16,9 @@
   <body>
     <a href='/'>
       <h1>
-        <img src="<%= "https://api.adorable.io/avatars/64/#{@current_user}.png" %>" />
+        <% if @current_user %>
+          <img src="<%= "https://api.adorable.io/avatars/64/#{@current_user}.png" %>" />
+        <% end %>
         <%= t('title') %>
       </h1>
     </a>
