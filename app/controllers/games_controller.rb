@@ -2,10 +2,12 @@ class GamesController < ApplicationController
   before_action :ensure_user_uid
   before_action :ensure_admin!, only: [:start, :finish]
 
+  after_action :publish_event, only: [:join]
+
   def show
     @game = game
     @participant = participant
-    @view_data = GameSerializer.new(game)
+    @view_data = view_data
   end
 
   def create
@@ -34,8 +36,19 @@ class GamesController < ApplicationController
 
   private
 
+  def publish_event
+    ActionCable.server.broadcast(
+      "game_#{game.uid}",
+      body: view_data
+    )
+  end
+
   def ensure_admin!
     render status: :unauthorized unless participant.admin
+  end
+
+  def view_data
+    GameSerializer.new(game).to_json
   end
 
   def game

@@ -18,4 +18,18 @@ ready(() => {
     channel: "PresenceChannel",
     game_uid: game_uid
   });
+
+  // admin
+  if(!meta('vue-data')) {
+    return;
+  }
+
+  App.cable.subscriptions.create({
+    channel: "ActivityChannel",
+    game_uid: game_uid
+  }, {
+    received: data => {
+      window.VUE_APP.changeData(JSON.parse(data.body));
+    }
+  });
 });

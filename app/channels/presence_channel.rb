@@ -13,10 +13,19 @@ class PresenceChannel < ApplicationCable::Channel
     find_game.tap do |game|
       return unless game
       return unless (participant = game.participants[current_user])
+      return unless participant.present != value
 
       participant.present = value
       game.save!
+      publish_event(game)
     end
+  end
+
+  def publish_event(game)
+    ActionCable.server.broadcast(
+      "game_#{game.uid}",
+      body: GameSerializer.new(game).to_json
+    )
   end
 
   def find_game

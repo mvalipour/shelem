@@ -32,7 +32,8 @@ class Game < ApplicationRecord
 
     participants[user_uid] = Participant.new(
       name: user_name,
-      admin: admin
+      admin: admin,
+      present: true
     )
   end
 
