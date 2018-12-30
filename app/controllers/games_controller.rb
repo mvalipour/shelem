@@ -58,7 +58,10 @@ class GamesController < ApplicationController
 
   def view_data
     GameSerializer.new(game).to_h.tap do |hash|
-      hash[:my_role] = I18n.t("roles.#{participant.role}") if participant
+      if participant
+        hash[:my_role] = participant.role
+        hash[:my_role_t] = I18n.t("roles.#{participant.role}")
+      end
     end.to_json
   end
 

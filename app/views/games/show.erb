@@ -21,13 +21,13 @@
     </p>
 
     <div v-if="status != 'not_started'">
-      <p>
+      <p v-if="my_role != 'spy' || status == 'finished'">
         <%= t('show_game.location') %>:
-        {{ location }}
+        {{ location_t }}
       </p>
       <p>
         <%= t('show_game.your_role') %>:
-        {{ my_role }}
+        {{ my_role_t }}
       </p>
     </div>
 
@@ -69,10 +69,6 @@
           &mdash; <%= t('show_game.number_of_spies') %>: {{ number_of_spies }}
         </span>
       </h4>
-
-      <div v-if="status == 'finished'">
-        <%= t('show_game.location') %>: <%= t("locations.#{@game.location}") %>
-      </div>
 
       <ul class='participants'>
         <li v-for="participant in participants" v-bind:class="{ present: participant.present }">

@@ -25,9 +25,9 @@ ready(() => {
   const channel = meta('game-activity-channel')
   if(!channel) { return; }
 
-  channel.split(',').each(c => {
+  channel.split(',').forEach(c => {
     App.cable.subscriptions.create(
-      { channel: channel, game_uid: game_uid },
+      { channel: c, game_uid: game_uid },
       { received: updateData }
     );
   });
