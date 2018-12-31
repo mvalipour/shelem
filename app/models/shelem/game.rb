@@ -1,13 +1,14 @@
-module Playing
-  class Shelem
-    attr_reader :player_hands, :spare_cards, :game_suit, :round_lead, :round_suit, :round_cards,
-      :scores, :game_lead, :game_bet
+module Shelem
+  class Game
+    attr_reader :player_hands, :spare_cards,
+      :game_suit, :game_lead, :game_bet, :game_scores,
+      :round_lead, :round_suit, :round_cards,
 
     def initialize(game_lead, bet)
       @round_lead = @game_lead = lead
       @game_bet = game_bet
       @round_cards = []
-      @scores = [0, 0]
+      @game_scores = [0, 0]
 
       # deal_cards
       Deck.new.tap do |deck|
@@ -63,7 +64,7 @@ module Playing
       @round_lead = round_winner_index
 
       # count score
-      scores[round_winner_team] += round_cards.sum(&:score) + 5
+      game_scores[round_winner_team] += round_cards.sum(&:score) + 5
 
       # reset round
       @round_suit = nil
@@ -85,14 +86,14 @@ module Playing
     end
 
     def game_winner_index
-      scores.each_with_index.max[1]
+      game_scores.each_with_index.max[1]
     end
 
     def game_scores
       # todo
       winner = game_winner_index
       if winner == game_lead
-        scores[game_lead] > game_bet ? game_bet : -game_bet
+        game_scores[game_lead] > game_bet ? game_bet : -game_bet
       else
 
       end
