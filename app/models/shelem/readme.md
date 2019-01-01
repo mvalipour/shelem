@@ -44,6 +44,8 @@ State:
 Scoring rules:
 - If the bidding team wins at least score of bid amount, they get their score
 - Otherwise they get minus the bidding amount
+- The not bidding team will get what they get
+- If 165 is bid: if achieved, the non bidding team gets -165
 
 ### Bidding
 

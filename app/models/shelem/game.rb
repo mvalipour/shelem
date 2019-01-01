@@ -1,33 +1,52 @@
 module Shelem
   class Game
-    attr_reader :player_hands, :spare_cards,
-      :game_suit, :game_lead, :game_bet, :game_scores,
-      :round_lead, :round_suit, :round_cards,
-
-    def initialize(game_lead, bet)
-      @round_lead = @game_lead = lead
-      @game_bet = game_bet
-      @round_cards = []
-      @game_scores = [0, 0]
-
-      # deal_cards
-      Deck.new.tap do |deck|
-        deck.shuffle!
-        @player_hands = 4.times.map { deck.draw(12) }
-        @spare_cards = deck.draw(4)
-      end
+    def initialize(
+      game_suit: nil,
+      game_lead: 0,
+      game_scores: [0, 0],
+      cards_played: 0,
+      round_lead: 0,
+      round_suit: nil,
+      round_set: 0
+    )
+      @game_suit = game_suit
+      @game_lead = game_lead
+      @game_scores = game_scores
+      @cards_played = cards_played
+      @round_lead = round_lead
+      @round_suit = round_suit
+      @round_set = Playing::CardSet.new(round_set)
     end
+
+    def to_h
+      {
+        game_suit: game_suit,
+        game_lead: game_lead,
+        game_scores: game_scores,
+
+        cards_played: cards_played,
+
+        round_lead: round_lead,
+        round_suit: round_suit,
+        round_set: round_set.to_i,
+      }
+    end
+
+    attr_reader :player_sets, :window_set,
+      :game_suit, :game_lead, :game_bet, :game_scores,
+      :cards_played,
+      :round_lead, :round_suit, :round_set,
 
     def next_to_play
-      (round_lead + round_cards.size) % 4
+      (round_lead + cards_played) % 4
     end
 
-    def round_suit
-      round_cards.first&.suit
+    def rounds_played
+      (cards_played / 4.0).ceil
     end
 
     def play(card)
-      cards_in_hand = player_hands[next_to_play]
+      cards_in_hand = player_sets[next_to_play]
 
       # does the player have the card in hand?
       unless cards_in_hand.delete(card)
@@ -44,16 +63,17 @@ module Shelem
         end
       end
 
-      round_cards << card
-      finish_round if round_cards.size == 4
+      @cards_played += 1
+      round_set << card
+      finish_round if round_set.size == 4
     end
 
     def new_round?
-      round_cards.empty?
+      round_set.empty?
     end
 
     def game_finished?
-      player_hands.all(&:empty?)
+      player_sets.all(&:empty?)
     end
 
     def finish_round
@@ -64,16 +84,16 @@ module Shelem
       @round_lead = round_winner_index
 
       # count score
-      game_scores[round_winner_team] += round_cards.sum(&:score) + 5
+      game_scores[round_winner_team] += round_set.sum(&:score) + 5
 
       # reset round
       @round_suit = nil
-      @round_cards = []
+      @round_set = []
     end
 
     def round_winner_index
       # re-order round cards to align for team members
-      hands = 4.times.map{ |i| round_cards[(round_lead + i) % 4] }
+      hands = 4.times.map{ |i| round_set[(round_lead + i) % 4] }
       hands.map do |c|
         # has player cut hand?
         if round_suit != game_suit && c.suit == game_suit
@@ -87,16 +107,6 @@ module Shelem
 
     def game_winner_index
       game_scores.each_with_index.max[1]
-    end
-
-    def game_scores
-      # todo
-      winner = game_winner_index
-      if winner == game_lead
-        game_scores[game_lead] > game_bet ? game_bet : -game_bet
-      else
-
-      end
     end
   end
 end

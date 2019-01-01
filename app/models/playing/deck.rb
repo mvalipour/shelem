@@ -8,7 +8,7 @@ module Playing
     delegate :shuffle!, to: :cards
 
     def draw(count = 1)
-      cards.shift(count)
+      CardSet.build(*cards.shift(count))
     end
   end
 end

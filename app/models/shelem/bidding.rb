@@ -1,17 +1,31 @@
 module Shelem
   class Bidding
-    def initialize(bid_starter)
-      @current_bidder = bid_starter
-      @bids = ([0] * 4).tap{ |b| b[bid_starter] = 100 }
-      @bid_amount = 100
+    BID_MIN = 100
+    BID_MAX = 165
+    BID_STEP = 5
+
+    def initialize(bids: [BID_MIN] * 4, current_bidder: 0)
+      @bids = bids
+      @current_bidder = current_bidder
     end
 
-    attr_reader :current_bidder, :bids, :bid_amount
+    def to_h
+      {
+        bids: bids,
+        current_bidder: current_bidder
+      }
+    end
+
+    attr_reader :current_bidder, :bids
+
+    def bid_amount
+      bids.max
+    end
 
     def bid(raise)
-      raise 'INVALID_RAISE' unless raise > 0 && raise % 5 == 0 && (bid_amount + raise) <= 165
+      raise 'INVALID_RAISE' unless raise > 0 && raise % BID_STEP == 0 && (bid_amount + raise) <= BID_MAX
 
-      bids[current_bidder] = (@bid_amount += raise)
+      bids[current_bidder] = (bid_amount + raise)
       move_next
     end
 
@@ -32,7 +46,7 @@ module Shelem
 
     def move_next
       loop do
-        @current_bidder = (current_bidder + 1) % 4
+        @current_bidder = (current_bidder + 1) % bids.size
         break unless bids[current_bidder].nil?
       end
     end

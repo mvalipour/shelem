@@ -6,28 +6,26 @@ module Playing
 
     class << self
       def all
-        (0..51).map{ |n| new(n) }.flatten
+        (0..51).map(&method(:new))
       end
 
-      def find(suit, face)
+      def build(suit, face)
         new(SUITS.index(suit) * 13 + FACES.index(face))
       end
     end
 
-    def initialize(unique_number)
-      raise 'invalid card number' unless unique_number.between?(0, 51)
+    def initialize(value)
+      raise 'invalid card number' unless value.between?(0, 51)
 
-      @unique_number = unique_number
+      @value = value
     end
 
-    attr_reader :unique_number
-
     def rank
-      unique_number % 13
+      @value % 13
     end
 
     def suit
-      SUITS[unique_number / 13]
+      SUITS[@value / 13]
     end
 
     def face
@@ -38,8 +36,12 @@ module Playing
       SCORES[rank]
     end
 
+    def to_i
+      @value
+    end
+
     def ==(other_card)
-      other_card.unique_number == unique_number
+      other_card.to_i == to_i
     end
   end
 end
