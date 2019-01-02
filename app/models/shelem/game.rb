@@ -1,16 +1,16 @@
 module Shelem
   class Game
     def initialize(
+      dealing:,
       game_suit: nil,
-      game_lead: 0,
       game_scores: [0, 0],
       cards_played: 0,
       round_lead: 0,
       round_suit: nil,
       round_set: 0
     )
+      @dealing = dealing
       @game_suit = game_suit
-      @game_lead = game_lead
       @game_scores = game_scores
       @cards_played = cards_played
       @round_lead = round_lead
@@ -21,7 +21,6 @@ module Shelem
     def to_h
       {
         game_suit: game_suit,
-        game_lead: game_lead,
         game_scores: game_scores,
 
         cards_played: cards_played,
@@ -32,10 +31,12 @@ module Shelem
       }
     end
 
-    attr_reader :player_sets, :window_set,
-      :game_suit, :game_lead, :game_bet, :game_scores,
+    attr_reader :dealing,
+      :game_suit, :game_scores,
       :cards_played,
-      :round_lead, :round_suit, :round_set,
+      :round_lead, :round_suit, :round_set
+
+    delegate :player_sets, :window_set, to: :dealing
 
     def next_to_play
       (round_lead + cards_played) % 4
@@ -64,8 +65,8 @@ module Shelem
       end
 
       @cards_played += 1
-      round_set << card
-      finish_round if round_set.size == 4
+      round_set.add(card)
+      finish_round if cards_played % 4 == 0
     end
 
     def new_round?
@@ -88,7 +89,7 @@ module Shelem
 
       # reset round
       @round_suit = nil
-      @round_set = []
+      round_set.clear
     end
 
     def round_winner_index

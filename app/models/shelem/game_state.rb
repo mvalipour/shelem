@@ -6,7 +6,7 @@ module Shelem
       @status = status
       @dealing = Dealing.new(dealing) if dealing
       @bidding = Bidding.new(bidding) if bidding
-      @game = Game.new(game) if game
+      @game = Game.new(game.merge(dealing: dealing)) if game
     end
 
     def to_h

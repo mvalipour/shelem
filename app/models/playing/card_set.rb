@@ -12,6 +12,14 @@ module Playing
       @bits
     end
 
+    def empty?
+      @bits == 0
+    end
+
+    def clear
+      @bits = 0
+    end
+
     def include?(card)
       (@bits & (1 << card.to_i)) > 0
     end
