@@ -26,6 +26,12 @@ class GamesController < ApplicationController
     render json: view_data
   end
 
+  def deal
+    game.deal!
+    game.save!(game_uid)
+    render json: view_data
+  end
+
   private
 
   def publish_event
@@ -40,12 +46,7 @@ class GamesController < ApplicationController
   end
 
   def view_data
-    {
-      uid: game_uid,
-      joined: game.players.include?(user_uid),
-      admin: game.admin_uid == user_uid,
-      game: game.data
-    }
+    ShelemGameSerializer.new(game, game_uid, user_uid).to_h
   end
 
   def game_uid

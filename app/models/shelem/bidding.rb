@@ -22,14 +22,14 @@ module Shelem
 
     attr_reader :current_bidder, :bids
 
-    def bid_amount
+    def highest_bid
       bids.max
     end
 
     def bid(raise)
-      raise 'INVALID_RAISE' unless raise > 0 && raise % BID_STEP == 0 && (bid_amount + raise) <= BID_MAX
+      raise 'INVALID_RAISE' unless raise > 0 && raise % BID_STEP == 0 && (highest_bid + raise) <= BID_MAX
 
-      bids[current_bidder] = (bid_amount + raise)
+      bids[current_bidder] = (highest_bid + raise)
       move_next
     end
 

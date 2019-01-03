@@ -4,12 +4,34 @@
 <% end %>
 
 <div id='vue-app'>
-  <div v-if='joined'>
-    <p>Joined!</p>
-    <p>Players:</p>
-    <ol>
-      <li v-for='player in game.players'>{{ player }}</li>
-    </ol>
+  <div v-if='player.joined'>
+    <div v-if="game.status == 'to_name'">
+      <p>Joined!</p>
+      <p>Waiting for players:</p>
+      <ol>
+        <li v-for='player in game.players'>{{ player }}</li>
+      </ol>
+    </div>
+    <div v-else-if="game.status == 'to_deal'">
+      <p>Ready to deal!</p>
+      <button v-if='player.admin' v-on:click='deal'>deal!</button>
+    </div>
+    <div v-else-if="game.status == 'to_bid'">
+      <p>Ready to start bidding!</p>
+      <p>Your hand: {{ player.set }} </p>
+    </div>
+    <div v-else-if="game.status == 'to_trump'">
+      <p>Ready to trump!</p>
+    </div>
+    <div v-else-if="game.status == 'to_start'">
+      <p>Ready to start the game!</p>
+    </div>
+    <div v-else-if="game.status == 'to_play'">
+      <p>Ready to play!</p>
+    </div>
+    <div v-else>
+      <p>game is finished!</p>
+    </div>
   </div>
   <div v-else>
     <button v-on:click='join'>Join!</button>

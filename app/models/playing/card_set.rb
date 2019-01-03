@@ -31,5 +31,13 @@ module Playing
     def add(card)
       @bits |= (1 << card.to_i)
     end
+
+    def cards
+      (0..51).select(&method(:include?)).map(&Card.method(:new))
+    end
+
+    def to_h
+      cards.each_with_object(Hash.new([])) { |c, hash| hash[c.suit] += [c.face] }
+    end
   end
 end

@@ -11,8 +11,16 @@ module Shelem
       @hash[uid] = name.slice(0, 8)
     end
 
+    def data
+      @hash
+    end
+
     def to_h
       @hash
+    end
+
+    def uids
+      @hash.keys
     end
   end
 end

@@ -14,15 +14,17 @@ ready(() => {
         Object.keys(this.$data).forEach(key => this.$data[key] = null);
         Object.entries(newdata).forEach(entry => Vue.set(this.$data, entry[0], entry[1]));
       },
-      join() {
+      action(type) {
         axios.post(
-          ['/games', this.uid, 'join'].join('/'),
+          ['/games', this.uid, type].join('/'),
           {},
           { headers: { 'X-CSRF-Token': meta('csrf-token') } }
         ).then(response => {
           console.log(response.data); this.changeData(response.data)
         })
-      }
+      },
+      join() { this.action('join') },
+      deal() { this.action('deal') }
     }
   });
   window.VUE_APP = app;
