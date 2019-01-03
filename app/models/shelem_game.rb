@@ -1,4 +1,5 @@
 class ShelemGame
+  include RedisStore
   include Minifier
   include Enums
 
@@ -27,19 +28,6 @@ class ShelemGame
       bidding: bidding.to_h,
       game: game.to_h
     }
-  end
-
-  def save!(uid)
-    true
-  end
-
-  def create!
-    SecureRandom.hex
-  end
-
-  def self.find!(uid)
-    # look up in redis
-    new
   end
 
   def can_add_player?

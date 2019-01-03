@@ -8,7 +8,7 @@ module Shelem
 
     def add(uid, name)
       raise 'MAXIMUM PLAYER COUNT REACHED' if size == 4
-      @hash[uid] == name
+      @hash[uid] = name
     end
 
     def to_h

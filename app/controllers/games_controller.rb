@@ -45,7 +45,7 @@ class GamesController < ApplicationController
   end
 
   def game
-    @_game ||= ShelemGame.find!(uid: game_uid)
+    @_game ||= ShelemGame.find!(game_uid)
   end
 
   def ensure_user_uid
