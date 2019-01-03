@@ -67,23 +67,26 @@ class ShelemGame
   end
 
   def bid!(player_uid, raise)
-    ensure_status!(:to_play, only_if: can_bid(player_uid), proceed_if: :bidding_done?) do
+    ensure_status!(:bidding, only_if: can_bid(player_uid), proceed_if: :bidding_done?) do
       bidding.bid(raise)
     end
   end
 
   def pass!(player_uid)
-    ensure_status!(:to_play, only_if: can_bid(player_uid), proceed_if: :bidding_done?) do
+    ensure_status!(:bidding, only_if: can_bid(player_uid), proceed_if: :bidding_done?) do
       bidding.pass
     end
   end
 
-  def can_trump?
+  def can_trump?(player_uid)
+    return false unless (player_index = players.uids.find_index(player_uid))
+    return false unless bidding&.highest_bidder == player_index
+
     bidding&.finished? && !dealing&.trumped?
   end
 
-  def trump!(cards_in, cards_out)
-    ensure_status!(:to_trump, only_if: :can_trump?) do
+  def trump!(player_uid, cards_in, cards_out)
+    ensure_status!(:to_trump, only_if: can_trump?(player_uid)) do
       dealing.trump(bidding.current_bidder, cards_in, cards_out)
     end
   end
@@ -93,7 +96,7 @@ class ShelemGame
   end
 
   def start_game!
-    ensure_status!(:to_play, :can_start_game?) do
+    ensure_status!(:to_play, only_if: :can_start_game?) do
       @game = Shelem::Game.new
     end
   end

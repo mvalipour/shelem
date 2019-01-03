@@ -37,7 +37,7 @@ module Playing
     end
 
     def to_h
-      cards.each_with_object(Hash.new([])) { |c, hash| hash[c.suit] += [c.face] }
+      cards.group_by(&:suit).map{ |_, c| c.map(&:to_i) }
     end
   end
 end

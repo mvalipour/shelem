@@ -19,9 +19,8 @@
     <div>
       <p>Your hand:</p>
       <p class='card-set'>
-        <span class='suit-set' v-for='(faces, suit) in player.cards'>
-          <span v-for='face in faces' v-bind:class="['pc', 'suit-'+suit, 'face-' + face]"></span>
-          &nbsp;
+        <span class='suit-set' v-for='cards in player.cards'>
+          <span v-for='number in cards' v-bind:class="['pc', 'no-'+number]"></span>
         </span>
       <p>
     </div>
@@ -32,18 +31,28 @@
     <div v-if="game.status == 'bidding'">
       <p>Bidding!</p>
       <p>Currently bidding: {{ game.players[game.current_bidder] }}</p>
-      <p>Highest bid: {{ game.highest_bid }}</p>
-      <button v-if='game.current_bidder == player.index' v-on:click='bid'>raise 5!</button>
-      <button v-if='game.current_bidder == player.index' v-on:click='pass'>pass!</button>
+      <p>Highest bid: {{ game.highest_bid }} by {{ game.players[game.highest_bidder] }}</p>
+      <div v-if='game.current_bidder == player.index'>
+        <button v-on:click='bid'>raise 5!</button>
+        <button v-on:click='pass'>pass!</button>
+      </div>
     </div>
     <div v-if="game.status == 'to_trump'">
       <p>Ready to trump!</p>
-    </div>
-    <div v-if="game.status == 'to_start'">
-      <p>Ready to start the game!</p>
+      <p>Widow set!</p>
+      <p class='card-set'>
+        <span class='suit-set' v-for='cards in game.widow_set'>
+          <span v-for='number in cards' v-bind:class="['pc', 'no-'+number]"></span>
+        </span>
+      <p>
+      <button v-if='game.highest_bidder == player.index' v-on:click='trump'>Trump!</button>
     </div>
     <div v-if="game.status == 'to_play'">
-      <p>Ready to play!</p>
+      <p>Ready to start the game!</p>
+      <button v-if='player.admin' v-on:click='start_game'>Start the game!</button>
+    </div>
+    <div v-if="game.status == 'playing'">
+      <p>Playing the game!</p>
     </div>
     <div v-if="game.status == 'done'">
       <p>game is finished!</p>

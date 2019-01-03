@@ -28,6 +28,13 @@ ready(() => {
       start_bidding() { this.action('start_bidding') },
       bid() { this.action('bid', { raise: 5 }) },
       pass() { this.action('pass') },
+      trump() {
+        this.action('trump', {
+          cards_in: this.game.widow_set.flat().slice(0, 2),
+          cards_out: this.player.cards.flat().slice(0, 2)
+        })
+      },
+      start_game() { this.action('start_game') },
     }
   });
   window.VUE_APP = app;

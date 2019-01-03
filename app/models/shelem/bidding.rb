@@ -23,7 +23,7 @@ module Shelem
     attr_reader :current_bidder, :bids
 
     def highest_bid
-      bids.compact.max
+      bids.max
     end
 
     def bid(raise)
@@ -34,7 +34,7 @@ module Shelem
     end
 
     def pass
-      bids[current_bidder] = nil
+      bids[current_bidder] = -1
       move_next
     end
 
@@ -43,7 +43,7 @@ module Shelem
     end
 
     def finished?
-      bids.compact.size == 1
+      bids.select(&:positive?).size == 1
     end
 
     private
@@ -51,7 +51,7 @@ module Shelem
     def move_next
       loop do
         @current_bidder = (current_bidder + 1) % bids.size
-        break unless bids[current_bidder].nil?
+        break unless bids[current_bidder] < 0
       end
     end
   end

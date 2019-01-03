@@ -1,59 +1,61 @@
 .pc { content: "\1F0A0"; font-size: 5em; line-height: 100%;}
-.pc.suit-hearts,
-.pc.suit-diamonds { color: indianred; }
 
-.pc.suit-hearts.face-2:after  { content: "\1F0A2" }
-.pc.suit-hearts.face-3:after  { content: "\1F0A3" }
-.pc.suit-hearts.face-4:after  { content: "\1F0A4" }
-.pc.suit-hearts.face-5:after  { content: "\1F0A5" }
-.pc.suit-hearts.face-6:after  { content: "\1F0A6" }
-.pc.suit-hearts.face-7:after  { content: "\1F0A7" }
-.pc.suit-hearts.face-8:after  { content: "\1F0A8" }
-.pc.suit-hearts.face-9:after  { content: "\1F0A9" }
-.pc.suit-hearts.face-10:after { content: "\1F0Aa" }
-.pc.suit-hearts.face-j:after  { content: "\1F0Ab" }
-.pc.suit-hearts.face-q:after  { content: "\1F0Ad" }
-.pc.suit-hearts.face-k:after  { content: "\1F0Ae" }
-.pc.suit-hearts.face-a:after  { content: "\1F0A1" }
+/* hearts */
+.pc.no-0:after  { content: "\1F0A2"; color: indianred; }
+.pc.no-1:after  { content: "\1F0A3"; color: indianred; }
+.pc.no-2:after  { content: "\1F0A4"; color: indianred; }
+.pc.no-3:after  { content: "\1F0A5"; color: indianred; }
+.pc.no-4:after  { content: "\1F0A6"; color: indianred; }
+.pc.no-5:after  { content: "\1F0A7"; color: indianred; }
+.pc.no-6:after  { content: "\1F0A8"; color: indianred; }
+.pc.no-7:after  { content: "\1F0A9"; color: indianred; }
+.pc.no-8:after  { content: "\1F0Aa"; color: indianred; }
+.pc.no-9:after  { content: "\1F0Ab"; color: indianred; }
+.pc.no-10:after { content: "\1F0Ad"; color: indianred; }
+.pc.no-11:after { content: "\1F0Ae"; color: indianred; }
+.pc.no-12:after { content: "\1F0A1"; color: indianred; }
 
-.pc.suit-spades.face-2:after  { content: "\1F0B2" }
-.pc.suit-spades.face-3:after  { content: "\1F0B3" }
-.pc.suit-spades.face-4:after  { content: "\1F0B4" }
-.pc.suit-spades.face-5:after  { content: "\1F0B5" }
-.pc.suit-spades.face-6:after  { content: "\1F0B6" }
-.pc.suit-spades.face-7:after  { content: "\1F0B7" }
-.pc.suit-spades.face-8:after  { content: "\1F0B8" }
-.pc.suit-spades.face-9:after  { content: "\1F0B9" }
-.pc.suit-spades.face-10:after { content: "\1F0Ba" }
-.pc.suit-spades.face-j:after  { content: "\1F0Bb" }
-.pc.suit-spades.face-q:after  { content: "\1F0Bd" }
-.pc.suit-spades.face-k:after  { content: "\1F0Be" }
-.pc.suit-spades.face-a:after  { content: "\1F0B1" }
+/* spades */
+.pc.no-13:after { content: "\1F0B2" }
+.pc.no-14:after { content: "\1F0B3" }
+.pc.no-15:after { content: "\1F0B4" }
+.pc.no-16:after { content: "\1F0B5" }
+.pc.no-17:after { content: "\1F0B6" }
+.pc.no-18:after { content: "\1F0B7" }
+.pc.no-19:after { content: "\1F0B8" }
+.pc.no-20:after { content: "\1F0B9" }
+.pc.no-21:after { content: "\1F0Ba" }
+.pc.no-22:after { content: "\1F0Bb" }
+.pc.no-23:after { content: "\1F0Bd" }
+.pc.no-24:after { content: "\1F0Be" }
+.pc.no-25:after { content: "\1F0B1" }
 
-.pc.suit-diamonds.face-2:after  { content: "\1F0C2" }
-.pc.suit-diamonds.face-3:after  { content: "\1F0C3" }
-.pc.suit-diamonds.face-4:after  { content: "\1F0C4" }
-.pc.suit-diamonds.face-5:after  { content: "\1F0C5" }
-.pc.suit-diamonds.face-6:after  { content: "\1F0C6" }
-.pc.suit-diamonds.face-7:after  { content: "\1F0C7" }
-.pc.suit-diamonds.face-8:after  { content: "\1F0C8" }
-.pc.suit-diamonds.face-9:after  { content: "\1F0C9" }
-.pc.suit-diamonds.face-10:after { content: "\1F0Ca" }
-.pc.suit-diamonds.face-j:after  { content: "\1F0Cb" }
-.pc.suit-diamonds.face-q:after  { content: "\1F0Cd" }
-.pc.suit-diamonds.face-k:after  { content: "\1F0Ce" }
-.pc.suit-diamonds.face-a:after  { content: "\1F0C1" }
+/* diamonds */
+.pc.no-26:after { content: "\1F0C2"; color: indianred; }
+.pc.no-27:after { content: "\1F0C3"; color: indianred; }
+.pc.no-28:after { content: "\1F0C4"; color: indianred; }
+.pc.no-29:after { content: "\1F0C5"; color: indianred; }
+.pc.no-30:after { content: "\1F0C6"; color: indianred; }
+.pc.no-31:after { content: "\1F0C7"; color: indianred; }
+.pc.no-32:after { content: "\1F0C8"; color: indianred; }
+.pc.no-33:after { content: "\1F0C9"; color: indianred; }
+.pc.no-34:after { content: "\1F0Ca"; color: indianred; }
+.pc.no-35:after { content: "\1F0Cb"; color: indianred; }
+.pc.no-36:after { content: "\1F0Cd"; color: indianred; }
+.pc.no-37:after { content: "\1F0Ce"; color: indianred; }
+.pc.no-38:after { content: "\1F0C1"; color: indianred; }
 
-.pc.suit-clubs.face-2:after  { content: "\1F0D2" }
-.pc.suit-clubs.face-3:after  { content: "\1F0D3" }
-.pc.suit-clubs.face-4:after  { content: "\1F0D4" }
-.pc.suit-clubs.face-5:after  { content: "\1F0D5" }
-.pc.suit-clubs.face-6:after  { content: "\1F0D6" }
-.pc.suit-clubs.face-7:after  { content: "\1F0D7" }
-.pc.suit-clubs.face-8:after  { content: "\1F0D8" }
-.pc.suit-clubs.face-9:after  { content: "\1F0D9" }
-.pc.suit-clubs.face-10:after { content: "\1F0Da" }
-.pc.suit-clubs.face-j:after  { content: "\1F0Db" }
-.pc.suit-clubs.face-q:after  { content: "\1F0Dd" }
-.pc.suit-clubs.face-k:after  { content: "\1F0De" }
-.pc.suit-clubs.face-a:after  { content: "\1F0D1" }
+/* clubs */
+.pc.no-39:after { content: "\1F0D2" }
+.pc.no-40:after { content: "\1F0D3" }
+.pc.no-41:after { content: "\1F0D4" }
+.pc.no-42:after { content: "\1F0D5" }
+.pc.no-43:after { content: "\1F0D6" }
+.pc.no-44:after { content: "\1F0D7" }
+.pc.no-45:after { content: "\1F0D8" }
+.pc.no-46:after { content: "\1F0D9" }
+.pc.no-47:after { content: "\1F0Da" }
+.pc.no-48:after { content: "\1F0Db" }
+.pc.no-49:after { content: "\1F0Dd" }
+.pc.no-50:after { content: "\1F0De" }
+.pc.no-51:after { content: "\1F0D1" }

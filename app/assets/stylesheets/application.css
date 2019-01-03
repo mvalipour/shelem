@@ -9,6 +9,8 @@ body {
 
 h1 img {
   vertical-align: middle;
+  height: 1.5em;
+  margin-left: 0.2em;
 }
 
 .secondary {
@@ -95,4 +97,4 @@ ul.participants li .desc {
 }
 
 .card-set { direction: ltr; }
-.card-set .suit-set { white-space: nowrap; display: inline-block; }
+.card-set .suit-set { white-space: nowrap; display: inline-block; padding-right: 1em;}
