@@ -1,42 +1,42 @@
 module Shelem
   class Game
+    include Minifier
+    include Enums
+
+    PROPS = %i(game_suit_i game_scores cards_played round_lead round_suit_i round_set)
+
+    enum game_suit: Playing::Card::SUITS, round_suit: Playing::Card::SUITS
+
     def initialize(
-      dealing:,
-      game_suit: nil,
+      game_suit_i: nil,
       game_scores: [0, 0],
       cards_played: 0,
       round_lead: 0,
-      round_suit: nil,
-      round_set: 0
+      round_suit_i: nil,
+      round_set: []
     )
-      @dealing = dealing
-      @game_suit = game_suit
+      @game_suit_i = game_suit_i
       @game_scores = game_scores
       @cards_played = cards_played
       @round_lead = round_lead
-      @round_suit = round_suit
-      @round_set = Playing::CardSet.new(round_set)
+      @round_suit_i = round_suit_i
+      @round_set = round_set.map(&Playing::Card.method(:new))
     end
 
-    def to_h
+    attr_reader *PROPS
+
+    def data
       {
-        game_suit: game_suit,
+        game_suit_i: game_suit_i,
         game_scores: game_scores,
 
         cards_played: cards_played,
 
         round_lead: round_lead,
-        round_suit: round_suit,
-        round_set: round_set.to_i,
+        round_suit_i: round_suit_i,
+        round_set: round_set.map(&:to_i),
       }
     end
-
-    attr_reader :dealing,
-      :game_suit, :game_scores,
-      :cards_played,
-      :round_lead, :round_suit, :round_set
-
-    delegate :player_sets, :window_set, to: :dealing
 
     def next_to_play
       (round_lead + cards_played) % 4
@@ -46,7 +46,7 @@ module Shelem
       (cards_played / 4.0).ceil
     end
 
-    def play(card)
+    def play(player_sets, card)
       cards_in_hand = player_sets[next_to_play]
 
       # does the player have the card in hand?
@@ -65,7 +65,7 @@ module Shelem
       end
 
       @cards_played += 1
-      round_set.add(card)
+      round_set << card
       finish_round if cards_played % 4 == 0
     end
 
@@ -74,15 +74,16 @@ module Shelem
     end
 
     def game_finished?
-      player_sets.all(&:empty?)
+      cards_played == 52
     end
 
     def finish_round
       # find winner
-      round_winner_team = round_winner_index % 2
+      round_winner = find_round_winner
+      round_winner_team = round_winner % 2
 
       # set round_lead
-      @round_lead = round_winner_index
+      @round_lead = round_winner
 
       # count score
       game_scores[round_winner_team] += round_set.sum(&:score) + 5
@@ -92,11 +93,10 @@ module Shelem
       round_set.clear
     end
 
-    def round_winner_index
+    def find_round_winner
       # re-order round cards to align for team members
-      hands = 4.times.map{ |i| round_set[(round_lead + i) % 4] }
-      hands.map do |c|
-        # has player cut hand?
+      round_set.rotate(round_lead).map do |c|
+        # has player cut hand with a game suit?
         if round_suit != game_suit && c.suit == game_suit
           # add 100 to ensure it's gonna be higher than any of the round suit ranks
           c.rank + 100
@@ -104,10 +104,6 @@ module Shelem
           c.suit == round_suit ? c.rank : -1
         end
       end.each_with_index.max[1]
-    end
-
-    def game_winner_index
-      game_scores.each_with_index.max[1]
     end
   end
 end

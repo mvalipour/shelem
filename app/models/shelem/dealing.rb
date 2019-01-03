@@ -1,13 +1,17 @@
 module Shelem
   class Dealing
-    attr_reader :player_sets, :widow_set
+    include Minifier
+
+    PROPS = %i(player_sets widow_set)
 
     def initialize(player_sets: [0, 0, 0, 0], widow_set: 0)
       @player_sets = player_sets.map(&Playing::CardSet.method(:new))
       @widow_set = Playing::CardSet.new(widow_set)
     end
 
-    def to_h
+    attr_reader :player_sets, :widow_set
+
+    def data
       {
         player_sets: player_sets.map(&:to_i),
         widow_set: widow_set&.to_i

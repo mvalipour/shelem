@@ -1,17 +1,24 @@
 module Shelem
   class GameState
-    STATUSES = %i(to_deal to_bid bidding to_trump to_play playing done)
+    include Minifier
+    include Enums
 
-    def initialize(status: :to_deal, dealing: nil, bidding: nil, game: nil)
-      @status = status
-      @dealing = Dealing.new(dealing) if dealing
-      @bidding = Bidding.new(bidding) if bidding
-      @game = Game.new(game.merge(dealing: dealing)) if game
+    PROPS = %i(status_i dealing bidding game)
+
+    enum status: %i(to_deal to_bid bidding to_trump to_play playing done)
+
+    def initialize(status_i: 0, dealing: nil, bidding: nil, game: nil)
+      @status_i = status_i
+      @dealing = Dealing.new(dealing) if dealing.present?
+      @bidding = Bidding.new(bidding) if bidding.present?
+      @game = Game.new(game.merge(dealing: dealing)) if game.present?
     end
 
-    def to_h
+    attr_reader *PROPS
+
+    def data
       {
-        status: status,
+        status_i: status_i,
         dealing: dealing.to_h,
         bidding: bidding.to_h,
         game: game.to_h

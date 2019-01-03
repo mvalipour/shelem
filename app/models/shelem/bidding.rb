@@ -1,5 +1,9 @@
 module Shelem
   class Bidding
+    include Minifier
+
+    PROPS = %i(bids current_bidder)
+
     BID_MIN = 100
     BID_MAX = 165
     BID_STEP = 5
@@ -9,7 +13,7 @@ module Shelem
       @current_bidder = current_bidder
     end
 
-    def to_h
+    def data
       {
         bids: bids,
         current_bidder: current_bidder
