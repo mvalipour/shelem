@@ -19,6 +19,7 @@
     <div v-else-if="game.status == 'to_bid'">
       <p>Ready to start bidding!</p>
       <p>Your hand: {{ player.set }} </p>
+      <button v-if='player.admin' v-on:click='start_bidding'>start_bidding!</button>
     </div>
     <div v-else-if="game.status == 'to_trump'">
       <p>Ready to trump!</p>

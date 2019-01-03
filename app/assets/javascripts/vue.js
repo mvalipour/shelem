@@ -16,7 +16,7 @@ ready(() => {
       },
       action(type) {
         axios.post(
-          ['/games', this.uid, type].join('/'),
+          ['/games', this.game.uid, type].join('/'),
           {},
           { headers: { 'X-CSRF-Token': meta('csrf-token') } }
         ).then(response => {
@@ -24,7 +24,8 @@ ready(() => {
         })
       },
       join() { this.action('join') },
-      deal() { this.action('deal') }
+      deal() { this.action('deal') },
+      start_bidding() { this.action('start_bidding') },
     }
   });
   window.VUE_APP = app;
