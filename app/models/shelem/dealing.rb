@@ -18,6 +18,10 @@ module Shelem
       }
     end
 
+    def trumped?
+      widow_set.empty?
+    end
+
     def deal
       Playing::Deck.new.tap do |deck|
         deck.shuffle! # TODO: don't do perfect shuffle
@@ -38,8 +42,7 @@ module Shelem
 
       cards_out.each(&set.method(:delete))
       cards_in.each(&set.method(:add))
-      cards_out.each(&widow_set.method(:add))
-      cards_in.each(&widow_set.method(:delete))
+      widow_set.clear
     end
   end
 end
