@@ -7,38 +7,18 @@ class GamesController < ApplicationController
   after_action :publish_status_event, only: ADMIN_ACTIONS
 
   def show
+    @game_uid = game_uid
     @game = game
-    @participant = participant
     @view_data = view_data
   end
 
   def create
-    game = Game.new.tap do |game|
-      game.add_participant(user_uid, user_name, admin: true)
-      game.save!
+    game = ShelemGame.new(admin_uid: user_uid).tap do |game|
+      game.add_player!(user_uid, user_name)
     end
 
-    redirect_to game_path(game.uid)
-  end
-
-  def join
-    game.add_participant!(user_uid, user_name)
-    redirect_to game_path(game.uid)
-  end
-
-  def start
-    game.started!
-    redirect_to game_path(game.uid)
-  end
-
-  def finish
-    game.finished!
-    redirect_to game_path(game.uid)
-  end
-
-  def restart
-    game.not_started!
-    redirect_to game_path(game.uid)
+    uid = game.create!
+    redirect_to game_path(uid)
   end
 
   private
@@ -48,29 +28,24 @@ class GamesController < ApplicationController
   def publish_event(type)
     ActionCable.server.broadcast(
       "game_#{type}_#{game.uid}",
-      body: view_data
+      body: view_data.to_json
     )
   end
 
   def ensure_admin!
-    render status: :unauthorized unless participant.admin
+    render status: :unauthorized unless user_uid == game.admin_uid
   end
 
   def view_data
-    GameSerializer.new(game).to_h.tap do |hash|
-      if participant
-        hash[:my_role] = participant.role
-        hash[:my_role_t] = I18n.t("roles.#{participant.role}")
-      end
-    end.to_json
+    game.data
+  end
+
+  def game_uid
+    params[:game_id] || params.require(:id)
   end
 
   def game
-    @_game ||= Game.find_by!(uid: params[:game_id] || params.require(:id))
-  end
-
-  def participant
-    @_participant ||= game.participants[user_uid]
+    @_game ||= ShelemGame.find!(uid: game_uid)
   end
 
   def ensure_user_uid

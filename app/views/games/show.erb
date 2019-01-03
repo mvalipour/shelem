@@ -1,82 +1,12 @@
 <% content_for :head do %>
-  <meta name="game-uid" content="<%= @game.uid %>">
+  <meta name="game-uid" content="<%= @game_uid %>">
 
   <% if @participant %>
-    <meta name="game-activity-channel" content="<%= @participant.admin ? "AdminChannel,ParticipantChannel" : "ParticipantChannel" %>">
-    <meta name="vue-data" content="<%= @view_data %>">
+    <meta name="game-activity-channel" content="GameChannel">
+    <meta name="vue-data" content="<%= @view_data.to_json %>">
   <% end %>
 <% end %>
 
-<% if !@participant %>
-  <%= form_with scope: :game, url: game_join_path(@game.uid), local: true do %>
-    <%= submit_tag(t('show_game.join')) %>
-  <% end %>
-<% else %>
-  <h2>
-    <%= t('show_game.title') %>
-  </h2>
-  <div id='vue-app'>
-    <p v-if="status == 'not_started'">
-      <%= t('show_game.not_started') %>
-    </p>
-
-    <div v-if="status != 'not_started'">
-      <p v-if="my_role != 'spy' || status == 'finished'">
-        <%= t('show_game.location') %>:
-        {{ location_t }}
-      </p>
-      <p>
-        <%= t('show_game.your_role') %>:
-        {{ my_role_t }}
-      </p>
-    </div>
-
-    <% if @participant.admin %>
-      <h4>
-        <%= t('show_game.game_control') %>
-      </h4>
-
-      <% if @game.not_started? %>
-        <%= form_with scope: :game, url: game_start_path(@game.uid), local: true do %>
-          <%= submit_tag(t('show_game.start')) %>
-        <% end %>
-      <% elsif @game.started? %>
-        <%= form_with scope: :game, url: game_finish_path(@game.uid), local: true do %>
-          <%= submit_tag(t('show_game.finish')) %>
-        <% end %>
-      <% elsif @game.finished? %>
-        <%= form_with scope: :game, url: game_restart_path(@game.uid), local: true do %>
-          <%= submit_tag(t('show_game.restart')) %>
-        <% end %>
-      <% end %>
-
-      <div>
-        <h4>
-          <%= t('show_game.share_link') %>
-        </h4>
-
-        <div class='share-link'>
-          <input id='foo' type='text' readonly='true' value='<%= game_url(@game.uid) %>' />
-          <button class="clipboard-btn" data-clipboard-target="#foo">
-            <%= t('show_game.copy_link') %>
-          </button>
-        </div>
-      </div>
-
-      <h4>
-        <%= t('show_game.participants') %>
-        <span class='secondary'>
-          &mdash; <%= t('show_game.number_of_spies') %>: {{ number_of_spies }}
-        </span>
-      </h4>
-
-      <ul class='participants'>
-        <li v-for="participant in participants" v-bind:class="{ present: participant.present }">
-          <img v-bind:src='"https://api.adorable.io/avatars/64/"+participant.uid+".png"' />
-          <label>{{ participant.name }}</label>
-          <label v-if="status == 'finished'" class='desc'>{{ participant.role }}</label>
-        </li>
-      </ul>
-    <% end %>
-  </div>
-<% end %>
+<pre style='direction: ltr;'>
+<%= JSON.pretty_generate(@view_data) %>
+</pre>
