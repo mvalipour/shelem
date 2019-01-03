@@ -4,6 +4,7 @@
   "dependencies": {
     "@rails/webpacker": "3.5",
     "actioncable": "^5.2.2",
+    "axios": "^0.18.0",
     "clipboard": "^2.0.4",
     "vazir-font": "^19.0.0",
     "vue": "^2.5.21"

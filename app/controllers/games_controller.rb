@@ -3,8 +3,7 @@ class GamesController < ApplicationController
   before_action :ensure_user_uid
   before_action :ensure_admin!, only: ADMIN_ACTIONS
 
-  after_action :publish_participant_event, only: [:join]
-  after_action :publish_status_event, only: ADMIN_ACTIONS
+  after_action :publish_event, only: [:join] + ADMIN_ACTIONS
 
   def show
     @game_uid = game_uid
@@ -21,13 +20,17 @@ class GamesController < ApplicationController
     redirect_to game_path(uid)
   end
 
+  def join
+    game.add_player!(user_uid, user_name)
+    game.save!(game_uid)
+    render json: view_data
+  end
+
   private
 
-  def publish_status_event; publish_event(:status) end
-  def publish_participant_event; publish_event(:participants) end
-  def publish_event(type)
+  def publish_event
     ActionCable.server.broadcast(
-      "game_#{type}_#{game.uid}",
+      "game_#{game_uid}",
       body: view_data.to_json
     )
   end
@@ -37,7 +40,12 @@ class GamesController < ApplicationController
   end
 
   def view_data
-    game.data
+    {
+      uid: game_uid,
+      joined: game.players.include?(user_uid),
+      admin: game.admin_uid == user_uid,
+      game: game.data
+    }
   end
 
   def game_uid

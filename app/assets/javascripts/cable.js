@@ -16,19 +16,13 @@ ready(() => {
   const game_uid = meta('game-uid');
   if(!game_uid) { return; }
 
-  App.cable.subscriptions.create({
-    channel: "PresenceChannel",
-    game_uid: game_uid
-  });
+  // App.cable.subscriptions.create({
+  //   channel: "PresenceChannel",
+  //   game_uid: game_uid
+  // });
 
-  // admin
-  const channel = meta('game-activity-channel')
-  if(!channel) { return; }
-
-  channel.split(',').forEach(c => {
-    App.cable.subscriptions.create(
-      { channel: c, game_uid: game_uid },
-      { received: updateData }
-    );
-  });
+  App.cable.subscriptions.create(
+    { channel: 'GameChannel', game_uid: game_uid },
+    { received: updateData }
+  );
 });

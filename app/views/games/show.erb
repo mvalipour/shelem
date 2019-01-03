@@ -1,12 +1,17 @@
 <% content_for :head do %>
   <meta name="game-uid" content="<%= @game_uid %>">
-
-  <% if @participant %>
-    <meta name="game-activity-channel" content="GameChannel">
-    <meta name="vue-data" content="<%= @view_data.to_json %>">
-  <% end %>
+  <meta name="vue-data" content="<%= @view_data.to_json %>">
 <% end %>
 
-<pre style='direction: ltr;'>
-<%= JSON.pretty_generate(@view_data) %>
-</pre>
+<div id='vue-app'>
+  <div v-if='joined'>
+    <p>Joined!</p>
+    <p>Players:</p>
+    <ol>
+      <li v-for='player in game.players'>{{ player }}</li>
+    </ol>
+  </div>
+  <div v-else>
+    <button v-on:click='join'>Join!</button>
+  </div>
+<div>
