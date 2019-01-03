@@ -18,7 +18,13 @@
     </div>
     <div v-else-if="game.status == 'to_bid'">
       <p>Ready to start bidding!</p>
-      <p>Your hand: {{ player.set }} </p>
+      <p>Your hand:</p>
+      <p class='card-set'>
+        <span class='suit-set' v-for='(faces, suit) in player.cards'>
+          <span v-for='face in faces' v-bind:class="['pc', 'suit-'+suit, 'face-' + face]"></span>
+          &nbsp;
+        </span>
+      <p>
       <button v-if='player.admin' v-on:click='start_bidding'>start_bidding!</button>
     </div>
     <div v-else-if="game.status == 'to_trump'">

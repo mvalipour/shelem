@@ -93,3 +93,6 @@ ul.participants li .desc {
   color: #ccc;
   font-size: 0.75em;
 }
+
+.card-set { direction: ltr; }
+.card-set .suit-set { white-space: nowrap; display: inline-block; }

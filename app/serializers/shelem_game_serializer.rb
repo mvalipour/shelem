@@ -20,6 +20,7 @@ class ShelemGameSerializer < ActiveModel::Serializer
   def game_data
     {
       uid: game_uid,
+      players: (players&.names || []),
       status: object.status,
       highest_bid: (bidding.highest_bid if bidding)
     }.compact
@@ -34,7 +35,7 @@ class ShelemGameSerializer < ActiveModel::Serializer
       index: index,
       joined: true,
       admin: object.admin_uid == player_uid,
-      set: (dealing.player_sets[index]&.to_h if dealing),
+      cards: (dealing.player_sets[index]&.to_h if dealing),
       bid: (bidding.bids[index] if bidding)
     }.compact
   end

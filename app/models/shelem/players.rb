@@ -19,6 +19,10 @@ module Shelem
       @hash
     end
 
+    def names
+      @hash.values
+    end
+
     def uids
       @hash.keys
     end

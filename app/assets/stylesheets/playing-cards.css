@@ -1,0 +1,59 @@
+.pc { content: "\1F0A0"; font-size: 5em; line-height: 100%;}
+.pc.suit-hearts,
+.pc.suit-diamonds { color: indianred; }
+
+.pc.suit-hearts.face-2:after  { content: "\1F0A2" }
+.pc.suit-hearts.face-3:after  { content: "\1F0A3" }
+.pc.suit-hearts.face-4:after  { content: "\1F0A4" }
+.pc.suit-hearts.face-5:after  { content: "\1F0A5" }
+.pc.suit-hearts.face-6:after  { content: "\1F0A6" }
+.pc.suit-hearts.face-7:after  { content: "\1F0A7" }
+.pc.suit-hearts.face-8:after  { content: "\1F0A8" }
+.pc.suit-hearts.face-9:after  { content: "\1F0A9" }
+.pc.suit-hearts.face-10:after { content: "\1F0Aa" }
+.pc.suit-hearts.face-j:after  { content: "\1F0Ab" }
+.pc.suit-hearts.face-q:after  { content: "\1F0Ad" }
+.pc.suit-hearts.face-k:after  { content: "\1F0Ae" }
+.pc.suit-hearts.face-a:after  { content: "\1F0A1" }
+
+.pc.suit-spades.face-2:after  { content: "\1F0B2" }
+.pc.suit-spades.face-3:after  { content: "\1F0B3" }
+.pc.suit-spades.face-4:after  { content: "\1F0B4" }
+.pc.suit-spades.face-5:after  { content: "\1F0B5" }
+.pc.suit-spades.face-6:after  { content: "\1F0B6" }
+.pc.suit-spades.face-7:after  { content: "\1F0B7" }
+.pc.suit-spades.face-8:after  { content: "\1F0B8" }
+.pc.suit-spades.face-9:after  { content: "\1F0B9" }
+.pc.suit-spades.face-10:after { content: "\1F0Ba" }
+.pc.suit-spades.face-j:after  { content: "\1F0Bb" }
+.pc.suit-spades.face-q:after  { content: "\1F0Bd" }
+.pc.suit-spades.face-k:after  { content: "\1F0Be" }
+.pc.suit-spades.face-a:after  { content: "\1F0B1" }
+
+.pc.suit-diamonds.face-2:after  { content: "\1F0C2" }
+.pc.suit-diamonds.face-3:after  { content: "\1F0C3" }
+.pc.suit-diamonds.face-4:after  { content: "\1F0C4" }
+.pc.suit-diamonds.face-5:after  { content: "\1F0C5" }
+.pc.suit-diamonds.face-6:after  { content: "\1F0C6" }
+.pc.suit-diamonds.face-7:after  { content: "\1F0C7" }
+.pc.suit-diamonds.face-8:after  { content: "\1F0C8" }
+.pc.suit-diamonds.face-9:after  { content: "\1F0C9" }
+.pc.suit-diamonds.face-10:after { content: "\1F0Ca" }
+.pc.suit-diamonds.face-j:after  { content: "\1F0Cb" }
+.pc.suit-diamonds.face-q:after  { content: "\1F0Cd" }
+.pc.suit-diamonds.face-k:after  { content: "\1F0Ce" }
+.pc.suit-diamonds.face-a:after  { content: "\1F0C1" }
+
+.pc.suit-clubs.face-2:after  { content: "\1F0D2" }
+.pc.suit-clubs.face-3:after  { content: "\1F0D3" }
+.pc.suit-clubs.face-4:after  { content: "\1F0D4" }
+.pc.suit-clubs.face-5:after  { content: "\1F0D5" }
+.pc.suit-clubs.face-6:after  { content: "\1F0D6" }
+.pc.suit-clubs.face-7:after  { content: "\1F0D7" }
+.pc.suit-clubs.face-8:after  { content: "\1F0D8" }
+.pc.suit-clubs.face-9:after  { content: "\1F0D9" }
+.pc.suit-clubs.face-10:after { content: "\1F0Da" }
+.pc.suit-clubs.face-j:after  { content: "\1F0Db" }
+.pc.suit-clubs.face-q:after  { content: "\1F0Dd" }
+.pc.suit-clubs.face-k:after  { content: "\1F0De" }
+.pc.suit-clubs.face-a:after  { content: "\1F0D1" }
