@@ -1,6 +1,6 @@
 class GamesController < ApplicationController
   ADMIN_ACTIONS = %i(deal start_bidding)
-  PLAYER_ACTIONS = %i(join)
+  PLAYER_ACTIONS = %i(join bid)
   before_action :ensure_user_uid
   before_action :ensure_admin!, only: ADMIN_ACTIONS
 
@@ -22,24 +22,44 @@ class GamesController < ApplicationController
   end
 
   def join
-    game.add_player!(user_uid, user_name)
-    game.save!(game_uid)
-    render json: view_data
+    change_game { |g| g.add_player!(user_uid, user_name) }
   end
 
   def deal
-    game.deal!
-    game.save!(game_uid)
-    render json: view_data
+    change_game { |g| g.deal! }
   end
 
   def start_bidding
-    game.start_bidding!
-    game.save!(game_uid)
-    render json: view_data
+    change_game { |g| g.start_bidding! }
+  end
+
+  def bid
+    change_game { |g| g.bid!(user_uid, params.require(:raise)) }
+  end
+
+  def pass
+    change_game { |g| g.pass!(user_uid) }
+  end
+
+  def trump
+    change_game { |g| g.trump!(user_uid, params.require(:cards_in), params.require(:cards_out)) }
+  end
+
+  def start_game
+    change_game { |g| g.start_game! }
+  end
+
+  def play
+    change_game { |g| g.play!(user_uid, params.require(:card)) }
   end
 
   private
+
+  def change_game
+    yield(game)
+    game.save!(game_uid)
+    render json: view_data
+  end
 
   def publish_event
     ActionCable.server.broadcast(

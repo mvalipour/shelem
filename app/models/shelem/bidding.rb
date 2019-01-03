@@ -23,7 +23,7 @@ module Shelem
     attr_reader :current_bidder, :bids
 
     def highest_bid
-      bids.max
+      bids.compact.max
     end
 
     def bid(raise)

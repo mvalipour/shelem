@@ -4,7 +4,7 @@ class ShelemGame
   include Enums
 
   PROPS = %i(admin_uid status_i players dealing bidding game)
-  STATUSES = %i(to_name to_deal to_bid to_trump to_start to_play done)
+  STATUSES = %i(to_name to_deal to_bid bidding to_trump to_play playing done)
 
   enum status: STATUSES
 
@@ -57,6 +57,27 @@ class ShelemGame
     end
   end
 
+  def bidding_done?
+    bidding&.finished?
+  end
+
+  def can_bid(player_uid)
+    return false unless (player_index = players.uids.find_index(player_uid))
+    bidding&.current_bidder == player_index
+  end
+
+  def bid!(player_uid, raise)
+    ensure_status!(:to_play, only_if: can_bid(player_uid), proceed_if: :bidding_done?) do
+      bidding.bid(raise)
+    end
+  end
+
+  def pass!(player_uid)
+    ensure_status!(:to_play, only_if: can_bid(player_uid), proceed_if: :bidding_done?) do
+      bidding.pass
+    end
+  end
+
   def can_trump?
     bidding&.finished? && !dealing&.trumped?
   end
@@ -72,7 +93,7 @@ class ShelemGame
   end
 
   def start_game!
-    ensure_status!(:to_start, :can_start_game?) do
+    ensure_status!(:to_play, :can_start_game?) do
       @game = Shelem::Game.new
     end
   end
@@ -81,23 +102,23 @@ class ShelemGame
     !game.finished?
   end
 
-  def play!(card)
-    ensure_status!(:to_play, only_if: :can_play?) do
-      game.play(dealing.player_sets, card)
-    end
-  end
-
   def done?
     game&.finished?
   end
 
-  def done!
-    ensure_status!(:to_play, only_if: :done?)
+  def play!(card)
+    ensure_status!(:playing, only_if: :can_play?, proceed_if: :done?) do
+      game.play(dealing.player_sets, card)
+    end
   end
 
   def ensure_status!(status, only_if: true, proceed_if: true)
-    raise 'INVALID_ACTION' unless status == status && (only_if == true || send(only_if))
+    raise 'INVALID_ACTION' unless status == status && evaluate(only_if)
     yield if block_given?
-    @status_i += 1 if (proceed_if == true || send(proceed_if) )
+    @status_i += 1 if evaluate(proceed_if)
+  end
+
+  def evaluate(predicate)
+    predicate.is_a?(Symbol) ? send(predicate) : !!predicate
   end
 end

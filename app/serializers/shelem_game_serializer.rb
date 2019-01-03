@@ -22,6 +22,7 @@ class ShelemGameSerializer < ActiveModel::Serializer
       uid: game_uid,
       players: (players&.names || []),
       status: object.status,
+      current_bidder: (bidding.current_bidder if bidding),
       highest_bid: (bidding.highest_bid if bidding)
     }.compact
   end
