@@ -1,6 +1,17 @@
-.pc:after { content: "\1F0A0"; font-size: 5em; line-height: 100%;}
+.pc:after {
+  content: "\1F0A0";
+  font-size: 5em;
+  line-height: 100%;
+  vertical-align: middle;
+}
 
 .pc.selected:after { color: gold !important; }
+
+/* suits */
+.pc.suit-hearts:after   { content: "\2665"; font-size: 2em; color: indianred; }
+.pc.suit-spades:after   { content: "\2660"; font-size: 2em; }
+.pc.suit-diamonds:after { content: "\2666"; font-size: 2em; color: indianred; }
+.pc.suit-clubs:after    { content: "\2663"; font-size: 2em; }
 
 /* hearts */
 .pc.no-0:after  { content: "\1F0A2"; color: indianred; }

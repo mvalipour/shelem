@@ -5,88 +5,90 @@
 <% end %>
 
 <div id='vue-app'>
+  <!-- <pre>{{ player }}</pre> -->
   <div v-if='player.joined'>
     <div v-if="game.status == 'playing'">
-      <p>Playing the game!</p>
-      <p>
+      <div>Playing the game!</div>
+      <div>Game suit: <span v-bind:class="['pc', 'suit-' + game.suit]"></span> </div>
+      <div>
         Currently playing:
         <span class='player-card'>
           <img v-bind:src="['https://api.adorable.io/avatars/64/', game.players[game.next_to_play].uid ,'.png'].join('')" />
           {{ game.players[game.next_to_play].name }}
         </span>
-      </p>
-      <p>
+      </div>
+      <div>
         scores: {{ game.scores }}
-      </p>
+      </div>
     </div>
 
     <div v-if="game.status == 'to_name'">
-      <p>Joined!</p>
-      <p>Waiting for players:</p>
+      <div>Joined!</div>
+      <div>Waiting for players:</div>
       <ol>
         <li v-for='player in game.players'>{{ player.name }}</li>
       </ol>
     </div>
     <div v-if="game.status == 'to_deal'">
-      <p>Ready to deal!</p>
+      <div>Ready to deal!</div>
       <button v-if='player.admin' v-on:click='deal'>deal!</button>
     </div>
     <div>
       <div v-if='player.cards'>
-        <p>Your hand:</p>
-        <p class='card-set'>
+        <div>Your hand:</div>
+        <div class='card-set'>
           <span class='suit-set' v-for='cards in player.cards'>
-            <span v-for='number in cards' v-bind:class="['pc', 'no-'+number, selectedCard == number ? 'selected' : '']" v-on:click='selectCard(number)'></span>
+            <span v-for='number in cards' v-bind:class="['pc', 'no-'+number, (selectedCard == number || selectedCards.indexOf(number) >= 0) ? 'selected' : '']" v-on:click='selectCard(number)'></span>
           </span>
-        <p>
+        </div>
       </div>
       <div v-if='game.played_set && game.played_set.length > 0'>
-        <p>Table:</p>
-        <p class='card-set'>
+        <div>Table:</div>
+        <div class='card-set'>
           <span v-for='number in game.played_set'>
             <span v-bind:class="['pc', 'no-'+number]"></span>
           </span>
-        <p>
+        </div>
       </div>
       <div v-if='game.widow_set && game.widow_set.length > 0'>
-        <p>Widow set!</p>
-        <p class='card-set'>
+        <div>Widow set!</div>
+        <div class='card-set'>
           <span v-for='number in game.widow_set.flat()'>
-            <span v-if="game.status == 'to_trump'" v-bind:class="['pc', 'no-'+number]"></span>
+            <span v-if="game.status == 'to_trump'" v-bind:class="['pc', 'no-'+number, selectedTrumpCards.indexOf(number) >= 0 ? 'selected' : '']" v-on:click='selectTrumpCard(number)'></span>
             <span v-else class='pc'></span>
           </span>
-        <p>
+        </div>
       </div>
     </div>
     <div v-if="game.status == 'to_bid'">
-      <p>Ready to start bidding!</p>
+      <div>Ready to start bidding!</div>
       <button v-if='player.admin' v-on:click='start_bidding'>start_bidding!</button>
     </div>
     <div v-if="game.status == 'bidding'">
-      <p>Bidding!</p>
-      <p>Currently bidding: {{ game.players[game.current_bidder].name }}</p>
-      <p>Highest bid: {{ game.highest_bid }} by {{ game.players[game.highest_bidder].name }}</p>
+      <div>Bidding!</div>
+      <div>Currently bidding: {{ game.players[game.current_bidder].name }}</div>
+      <div>Highest bid: {{ game.highest_bid }} by {{ game.players[game.highest_bidder].name }}</div>
       <div v-if='game.current_bidder == player.index'>
         <button v-on:click='bid'>raise 5!</button>
         <button v-on:click='pass'>pass!</button>
       </div>
     </div>
     <div v-if="game.status == 'to_trump'">
-      <p>Ready to trump!</p>
+      <div>Ready to trump!</div>
       <button v-if='game.highest_bidder == player.index' v-on:click='trump'>Trump!</button>
     </div>
     <div v-if="game.status == 'to_play'">
-      <p>Ready to start the game!</p>
+      <div>Ready to start the game!</div>
       <button v-if='player.admin' v-on:click='start_game'>Start the game!</button>
     </div>
     <div v-if="game.status == 'playing'">
       <button v-if='game.next_to_play == player.index' v-on:click='play'>Play card!</button>
     </div>
     <div v-if="game.status == 'done'">
-      <p>game is finished!</p>
+      <div>game is finished!</div>
     </div>
   </div>
   <div v-else>
     <button v-on:click='join'>Join!</button>
   </div>
-<div>
+</div>

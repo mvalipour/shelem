@@ -7,6 +7,8 @@ body {
   padding: 1em;
 }
 
+pre { direction: ltr;}
+
 h1 img {
   vertical-align: middle;
   height: 1.4em;

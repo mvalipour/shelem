@@ -74,7 +74,7 @@ module Shelem
     end
 
     def finished?
-      cards_played == 52
+      cards_played == 48
     end
 
     def finish_round

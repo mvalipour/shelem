@@ -31,6 +31,10 @@ module Shelem
     end
 
     def trump(player_index, cards_in, cards_out)
+      unless cards_in.size == cards_out.size
+        raise 'CARDS_IN AND CARDS_OUT MUST BE SAME SIZE'
+      end
+
       set = player_sets[player_index]
       unless cards_out.all?(&set.method(:include?))
         raise 'CARDS_OUT MUST BE IN CARD SET'
