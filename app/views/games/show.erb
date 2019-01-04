@@ -6,6 +6,20 @@
 
 <div id='vue-app'>
   <div v-if='player.joined'>
+    <div v-if="game.status == 'playing'">
+      <p>Playing the game!</p>
+      <p>
+        Currently playing:
+        <span class='player-card'>
+          <img v-bind:src="['https://api.adorable.io/avatars/64/', game.players[game.next_to_play].uid ,'.png'].join('')" />
+          {{ game.players[game.next_to_play].name }}
+        </span>
+      </p>
+      <p>
+        scores: {{ game.scores }}
+      </p>
+    </div>
+
     <div v-if="game.status == 'to_name'">
       <p>Joined!</p>
       <p>Waiting for players:</p>
@@ -66,14 +80,6 @@
       <button v-if='player.admin' v-on:click='start_game'>Start the game!</button>
     </div>
     <div v-if="game.status == 'playing'">
-      <p>Playing the game!</p>
-      <p>
-        Currently playing:
-        <span class='player-card'>
-          <img v-bind:src="['https://api.adorable.io/avatars/64/', game.players[game.next_to_play].uid ,'.png'].join('')" />
-          {{ game.players[game.next_to_play].name }}
-        </span>
-      </p>
       <button v-if='game.next_to_play == player.index' v-on:click='play'>Play card!</button>
     </div>
     <div v-if="game.status == 'done'">
