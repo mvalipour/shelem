@@ -122,7 +122,10 @@
       <div><%= t('game.done.title') %></div>
     </div>
   </div>
-  <div v-else>
+  <div v-else-if="game.status == 'to_name'">
     <button v-on:click='join'><%= t('game.join') %></button>
+  </div>
+  <div>
+    No access
   </div>
 </div>
