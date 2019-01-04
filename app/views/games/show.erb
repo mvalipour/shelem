@@ -24,6 +24,13 @@
           <span v-for='number in cards' v-bind:class="['pc', 'no-'+number]"></span>
         </span>
       <p>
+      <p>Widow set!</p>
+      <p class='card-set'>
+        <span v-for='number in game.widow_set.flat()'>
+          <span v-if="game.status == 'to_trump'" v-bind:class="['pc', 'no-'+number]"></span>
+          <span v-else class='pc'></span>
+        </span>
+      <p>
     </div>
     <div v-if="game.status == 'to_bid'">
       <p>Ready to start bidding!</p>
@@ -40,12 +47,6 @@
     </div>
     <div v-if="game.status == 'to_trump'">
       <p>Ready to trump!</p>
-      <p>Widow set!</p>
-      <p class='card-set'>
-        <span class='suit-set' v-for='cards in game.widow_set'>
-          <span v-for='number in cards' v-bind:class="['pc', 'no-'+number]"></span>
-        </span>
-      <p>
       <button v-if='game.highest_bidder == player.index' v-on:click='trump'>Trump!</button>
     </div>
     <div v-if="game.status == 'to_play'">

@@ -1,4 +1,4 @@
-.pc { content: "\1F0A0"; font-size: 5em; line-height: 100%;}
+.pc:after { content: "\1F0A0"; font-size: 5em; line-height: 100%;}
 
 /* hearts */
 .pc.no-0:after  { content: "\1F0A2"; color: indianred; }
