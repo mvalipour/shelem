@@ -35,6 +35,7 @@ ready(() => {
         })
       },
       start_game() { this.action('start_game') },
+      play() { this.action('play', { card: this.player.cards.flat()[0] }) },
     }
   });
   window.VUE_APP = app;

@@ -101,7 +101,10 @@ class ShelemGame
     end
   end
 
-  def can_play?
+  def can_play?(player_uid)
+    return false unless (player_index = players.uids.find_index(player_uid))
+    return false unless game&.next_to_play == player_index
+
     !game.finished?
   end
 
@@ -109,9 +112,9 @@ class ShelemGame
     game&.finished?
   end
 
-  def play!(card)
-    ensure_status!(:playing, only_if: :can_play?, proceed_if: :done?) do
-      game.play(dealing.player_sets, card)
+  def play!(player_uid, card)
+    ensure_status!(:playing, only_if: can_play?(player_uid), proceed_if: :done?) do
+      game.play(dealing.player_sets, Playing::Card.new(card))
     end
   end
 

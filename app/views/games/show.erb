@@ -53,6 +53,8 @@
     </div>
     <div v-if="game.status == 'playing'">
       <p>Playing the game!</p>
+      <p>Currently playing: {{ game.players[game.next_to_play] }}</p>
+      <button v-if='game.next_to_play == player.index' v-on:click='play'>Play card!</button>
     </div>
     <div v-if="game.status == 'done'">
       <p>game is finished!</p>

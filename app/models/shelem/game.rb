@@ -55,8 +55,8 @@ module Shelem
       end
 
       if new_round?
-        @round_suit = card.suit
-        @game_suit = card.suit unless game_suit
+        round_suit = card.suit
+        game_suit = card.suit unless game_suit
       else
         # can the player has a card for round_suit but not playing it
         if round_suit && card.suit != round_suit && cards_in_hand.map(&:suit).include?(round_suit)
@@ -73,7 +73,7 @@ module Shelem
       round_set.empty?
     end
 
-    def game_finished?
+    def finished?
       cards_played == 52
     end
 
@@ -89,7 +89,7 @@ module Shelem
       game_scores[round_winner_team] += round_set.sum(&:score) + 5
 
       # reset round
-      @round_suit = nil
+      round_suit = nil
       round_set.clear
     end
 
