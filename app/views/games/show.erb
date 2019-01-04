@@ -97,8 +97,8 @@
     </div>
     <div v-if="game.status == 'bidding'">
       <h4><%= t('game.bidding.title') %></h4>
-      <h4><%= t('game.bidding.current_bidder') %>: {{ game.players[game.current_bidder].name }}</h4>
-      <h4><%= t('game.bidding.highest_bidder') %>: {{ game.highest_bid }} -- {{ game.players[game.highest_bidder].name }}</h4>
+      <div><%= t('game.bidding.current_bidder') %>: {{ game.players[game.current_bidder].name }}</div>
+      <div><%= t('game.bidding.highest_bidder') %>: {{ game.highest_bid }} -- {{ game.players[game.highest_bidder].name }}</div>
       <div v-if='game.current_bidder == player.index'>
         <button v-on:click='bid(20)'><%= t('game.bidding.raise_20') %></button>
         <button v-on:click='bid(15)'><%= t('game.bidding.raise_15') %></button>
