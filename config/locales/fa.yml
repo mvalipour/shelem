@@ -10,8 +10,9 @@ fa:
     playing:
       title: بازی در حال انجام شدنه
       game_suit: حکم
-      your_team_score: امتیاز تیم شما
-      other_team_score: امتیاز تیم مقابل
+      your_team: تیم شما
+      other_team: تیم مقابل
+      score: امتیاز
       your_hand: دست شما
       played_set: زمین
       widow_set: کارت های اضافی

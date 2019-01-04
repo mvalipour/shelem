@@ -18,6 +18,7 @@ h1 img {
 }
 
 .player-card { margin-bottom: 0.5em;}
+.game-info .player-card { display: inline-block;}
 
 .card-set .played-card img,
 .player-card img {
