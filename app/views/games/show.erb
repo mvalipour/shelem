@@ -15,8 +15,7 @@
       <div>
         <%= t('game.playing.your_team') %>:
         <div v-for='player in game.players.filter((i, ix) => ix % 2 == player.index % 2)' class='player-card'>
-          <img v-bind:src="['https://api.adorable.io/avatars/64/', player.uid ,'.png'].join('')" />
-          {{ player.name }}
+          <player v-bind:data='player'></player>
         </div>
 
         <span v-if="game.scores">
@@ -27,8 +26,7 @@
       <div>
         <%= t('game.playing.other_team') %>:
         <div v-for='player in game.players.filter((i, ix) => ix % 2 != player.index % 2)' class='player-card'>
-          <img v-bind:src="['https://api.adorable.io/avatars/64/', player.uid ,'.png'].join('')" />
-          {{ player.name }}
+          <player v-bind:data='player'></player>
         </div>
 
         <span v-if="game.scores">
@@ -42,8 +40,7 @@
       <h4><%= t('game.to_name.title') %></h4>
       <div>
         <div v-for='player in game.players' class='player-card'>
-          <img v-bind:src="['https://api.adorable.io/avatars/64/', player.uid ,'.png'].join('')" />
-          {{ player.name }}
+          <player v-bind:data='player'></player>
         </div>
       </div>
       <div v-if='player.admin'>
@@ -77,7 +74,7 @@
         <div class='card-set'>
           <div v-for='(number, index) in game.played_set' class='played-card'>
             <div v-bind:class="['pc', 'no-'+number]"></div>
-            <img v-bind:src="['https://api.adorable.io/avatars/64/', game.players[(game.round_lead + index) % 4].uid ,'.png'].join('')" />
+            <player v-bind:data='game.players[(game.round_lead + index) % 4]' v-bind:name='false'></player>
           </div>
         </div>
       </div>
@@ -97,8 +94,15 @@
     </div>
     <div v-if="game.status == 'bidding'">
       <h4><%= t('game.bidding.title') %></h4>
-      <div><%= t('game.bidding.current_bidder') %>: {{ game.players[game.current_bidder].name }}</div>
-      <div><%= t('game.bidding.highest_bidder') %>: {{ game.highest_bid }} -- {{ game.players[game.highest_bidder].name }}</div>
+      <div>
+        <%= t('game.bidding.current_bidder') %>:
+        <player v-bind:data='game.players[game.current_bidder]'></player>
+      </div>
+      <div>
+        <%= t('game.bidding.highest_bidder') %>:
+        {{ game.highest_bid }} --
+        <player v-bind:data='game.players[game.highest_bidder]'></player>
+      </div>
       <div v-if='game.current_bidder == player.index'>
         <button v-on:click='bid(20)'><%= t('game.bidding.raise_20') %></button>
         <button v-on:click='bid(15)'><%= t('game.bidding.raise_15') %></button>

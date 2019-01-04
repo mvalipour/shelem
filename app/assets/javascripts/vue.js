@@ -4,6 +4,8 @@ const meta = require('./meta');
 const Vue = require('vue');
 const axios = require('axios');
 
+require('./components')
+
 function toggleElement(array, el) {
   array = array || []
   if(array.indexOf(el) >= 0) {
