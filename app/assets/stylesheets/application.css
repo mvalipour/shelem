@@ -17,6 +17,7 @@ h1 img {
   outline: dashed 1px #777;
 }
 
+.card-set .played-card img,
 .player-card img {
   vertical-align: middle;
   height: 1.8em;
@@ -110,3 +111,6 @@ ul.participants li .desc {
 
 .card-set { direction: ltr; }
 .card-set .suit-set { white-space: nowrap; display: inline-block; padding-right: 1em;}
+.card-set .played-card {
+  display: inline-block; text-align: center;
+}

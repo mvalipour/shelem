@@ -45,9 +45,10 @@
       <div v-if='game.played_set && game.played_set.length > 0'>
         <div>Table:</div>
         <div class='card-set'>
-          <span v-for='number in game.played_set'>
-            <span v-bind:class="['pc', 'no-'+number]"></span>
-          </span>
+          <div v-for='(number, index) in game.played_set' class='played-card'>
+            <div v-bind:class="['pc', 'no-'+number]"></div>
+            <img v-bind:src="['https://api.adorable.io/avatars/64/', game.players[(game.round_lead + index) % 4].uid ,'.png'].join('')" />
+          </div>
         </div>
       </div>
       <div v-if='game.widow_set && game.widow_set.length > 0'>
