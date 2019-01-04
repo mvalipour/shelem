@@ -97,7 +97,7 @@ class ShelemGame
 
   def start_game!
     ensure_status!(:to_play, only_if: :can_start_game?) do
-      @game = Shelem::Game.new
+      @game = Shelem::Game.new(round_lead: bidding.highest_bidder)
     end
   end
 

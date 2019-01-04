@@ -18,19 +18,31 @@
       <button v-if='player.admin' v-on:click='deal'>deal!</button>
     </div>
     <div>
-      <p>Your hand:</p>
-      <p class='card-set'>
-        <span class='suit-set' v-for='cards in player.cards'>
-          <span v-for='number in cards' v-bind:class="['pc', 'no-'+number]"></span>
-        </span>
-      <p>
-      <p>Widow set!</p>
-      <p class='card-set'>
-        <span v-for='number in game.widow_set.flat()'>
-          <span v-if="game.status == 'to_trump'" v-bind:class="['pc', 'no-'+number]"></span>
-          <span v-else class='pc'></span>
-        </span>
-      <p>
+      <div v-if='player.cards'>
+        <p>Your hand:</p>
+        <p class='card-set'>
+          <span class='suit-set' v-for='cards in player.cards'>
+            <span v-for='number in cards' v-bind:class="['pc', 'no-'+number]"></span>
+          </span>
+        <p>
+      </div>
+      <div v-if='game.played_set && game.played_set.length > 0'>
+        <p>Table:</p>
+        <p class='card-set'>
+          <span v-for='number in game.played_set'>
+            <span v-bind:class="['pc', 'no-'+number]"></span>
+          </span>
+        <p>
+      </div>
+      <div v-if='game.widow_set && game.widow_set.length > 0'>
+        <p>Widow set!</p>
+        <p class='card-set'>
+          <span v-for='number in game.widow_set.flat()'>
+            <span v-if="game.status == 'to_trump'" v-bind:class="['pc', 'no-'+number]"></span>
+            <span v-else class='pc'></span>
+          </span>
+        <p>
+      </div>
     </div>
     <div v-if="game.status == 'to_bid'">
       <p>Ready to start bidding!</p>

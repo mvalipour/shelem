@@ -24,8 +24,12 @@ module Playing
       @value % 13
     end
 
+    def suit_i
+      @value / 13
+    end
+
     def suit
-      SUITS[@value / 13]
+      SUITS[suit_i]
     end
 
     def face

@@ -1,7 +1,7 @@
 module Shelem
   class Game
     include Minifier
-    include Enums
+      include Enums
 
     PROPS = %i(game_suit_i game_scores cards_played round_lead round_suit_i round_set)
 
@@ -55,8 +55,8 @@ module Shelem
       end
 
       if new_round?
-        round_suit = card.suit
-        game_suit = card.suit unless game_suit
+        @round_suit_i = card.suit_i
+        @game_suit_i = card.suit_i unless @game_suit_i
       else
         # can the player has a card for round_suit but not playing it
         if round_suit && card.suit != round_suit && cards_in_hand.map(&:suit).include?(round_suit)
