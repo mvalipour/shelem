@@ -125,7 +125,7 @@
   <div v-else-if="game.status == 'to_name'">
     <button v-on:click='join'><%= t('game.join') %></button>
   </div>
-  <div>
+  <div v-else>
     No access
   </div>
 </div>
