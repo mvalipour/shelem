@@ -15,15 +15,15 @@ ready(() => {
         Object.entries(newdata).forEach(entry => Vue.set(this.$data, entry[0], entry[1]));
       },
       action(type, data = {}) {
-        axios.post(
+        return axios.post(
           ['/games', this.game.uid, type].join('/'),
           data,
           { headers: { 'X-CSRF-Token': meta('csrf-token') } }
         ).then(response => {
-          console.log(response.data); this.changeData(response.data)
+          this.changeData(response.data)
         })
       },
-      join() { this.action('join') },
+      join() { this.action('join').then(() => document.location.reload()) },
       deal() { this.action('deal') },
       start_bidding() { this.action('start_bidding') },
       bid() { this.action('bid', { raise: 5 }) },

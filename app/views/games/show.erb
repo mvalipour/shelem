@@ -1,5 +1,6 @@
 <% content_for :head do %>
   <meta name="game-uid" content="<%= @game_uid %>">
+  <meta name="player-index" content="<%= @view_data.dig(:player, :index) %>">
   <meta name="vue-data" content="<%= @view_data.to_json %>">
 <% end %>
 

@@ -1,6 +1,6 @@
 class GamesController < ApplicationController
-  ADMIN_ACTIONS = %i(deal start_bidding)
-  PLAYER_ACTIONS = %i(join bid)
+  ADMIN_ACTIONS = %i(deal start_bidding start_game)
+  PLAYER_ACTIONS = %i(join bid pass trump play)
   before_action :ensure_user_uid
   before_action :ensure_admin!, only: ADMIN_ACTIONS
 
@@ -62,9 +62,14 @@ class GamesController < ApplicationController
   end
 
   def publish_event
+    return unless game.players
+    game.players.uids.each_with_index(&method(:publish_to_player))
+  end
+
+  def publish_to_player(uid, index)
     ActionCable.server.broadcast(
-      "game_#{game_uid}",
-      body: view_data.to_json
+      "game_#{game_uid}_#{index}",
+      body: view_data(uid).to_json
     )
   end
 
@@ -72,8 +77,8 @@ class GamesController < ApplicationController
     render status: :unauthorized unless user_uid == game.admin_uid
   end
 
-  def view_data
-    ShelemGameSerializer.new(game, game_uid, user_uid).to_h
+  def view_data(player_uid = user_uid)
+    ShelemGameSerializer.new(game, game_uid, player_uid).to_h
   end
 
   def game_uid

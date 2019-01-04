@@ -14,7 +14,8 @@ function updateData(data) {
 
 ready(() => {
   const game_uid = meta('game-uid');
-  if(!game_uid) { return; }
+  const player_index = meta('player-index');
+  if(!game_uid || !player_index) { return; }
 
   // App.cable.subscriptions.create({
   //   channel: "PresenceChannel",
@@ -22,7 +23,7 @@ ready(() => {
   // });
 
   App.cable.subscriptions.create(
-    { channel: 'GameChannel', game_uid: game_uid },
+    { channel: 'GameChannel', game_uid: game_uid, player_index: player_index },
     { received: updateData }
   );
 });
