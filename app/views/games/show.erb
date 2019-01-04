@@ -8,33 +8,25 @@
   <!-- <pre>{{ player }}</pre> -->
   <div v-if='player.joined'>
     <div v-if="game.status == 'playing'">
-      <div>Playing the game!</div>
-      <div>Game suit: <span v-bind:class="['pc', 'suit-' + game.suit]"></span> </div>
-      <div>
-        Currently playing:
-        <span class='player-card'>
-          <img v-bind:src="['https://api.adorable.io/avatars/64/', game.players[game.next_to_play].uid ,'.png'].join('')" />
-          {{ game.players[game.next_to_play].name }}
-        </span>
-      </div>
-      <div>Your team score: {{ game.scores[player.index % 2] }}</div>
-      <div>Other team score: {{ game.scores[(player.index + 1) % 2] }}</div>
+      <div><%= t('game.playing.title') %></div>
+      <div><%= t('game.playing.game_suit') %>: <span v-bind:class="['pc', 'suit-' + game.suit]"></span> </div>
+      <div><%= t('game.playing.your_team_score') %>: {{ game.scores[player.index % 2] }}</div>
+      <div><%= t('game.playing.other_team_score') %>: {{ game.scores[(player.index + 1) % 2] }}</div>
     </div>
 
     <div v-if="game.status == 'to_name'">
-      <div>Joined!</div>
-      <div>Waiting for players:</div>
+      <div><%= t('game.to_name.title') %></div>
       <ol>
         <li v-for='player in game.players'>{{ player.name }}</li>
       </ol>
     </div>
     <div v-if="game.status == 'to_deal'">
-      <div>Ready to deal!</div>
-      <button v-if='player.admin' v-on:click='deal'>deal!</button>
+      <div><%= t('game.to_deal.title') %></div>
+      <button v-if='player.admin' v-on:click='deal'><%= t('game.to_deal.deal') %></button>
     </div>
     <div>
       <div v-if='player.cards'>
-        <div>Your hand:</div>
+        <div><%= t('game.playing.your_hand') %></div>
         <div class='card-set'>
           <span class='suit-set' v-for='cards in player.cards'>
             <span v-for='number in cards' v-bind:class="['pc', 'no-'+number, (selectedCard == number || selectedCards.indexOf(number) >= 0) ? 'selected' : '']" v-on:click='selectCard(number)'></span>
@@ -42,7 +34,7 @@
         </div>
       </div>
       <div v-if='game.played_set && game.played_set.length > 0'>
-        <div>Table:</div>
+        <div><%= t('game.playing.played_set') %></div>
         <div class='card-set'>
           <div v-for='(number, index) in game.played_set' class='played-card'>
             <div v-bind:class="['pc', 'no-'+number]"></div>
@@ -51,7 +43,7 @@
         </div>
       </div>
       <div v-if='game.widow_set && game.widow_set.length > 0'>
-        <div>Widow set!</div>
+        <div><%= t('game.playing.widow_set') %></div>
         <div class='card-set'>
           <span v-for='number in game.widow_set.flat()'>
             <span v-if="game.status == 'to_trump'" v-bind:class="['pc', 'no-'+number, selectedTrumpCards.indexOf(number) >= 0 ? 'selected' : '']" v-on:click='selectTrumpCard(number)'></span>
@@ -61,37 +53,37 @@
       </div>
     </div>
     <div v-if="game.status == 'to_bid'">
-      <div>Ready to start bidding!</div>
-      <button v-if='player.admin' v-on:click='start_bidding'>start_bidding!</button>
+      <div><%= t('game.to_bid.title') %></div>
+      <button v-if='player.admin' v-on:click='start_bidding'><%= t('game.to_bid.start_bidding') %></button>
     </div>
     <div v-if="game.status == 'bidding'">
-      <div>Bidding!</div>
-      <div>Currently bidding: {{ game.players[game.current_bidder].name }}</div>
-      <div>Highest bid: {{ game.highest_bid }} by {{ game.players[game.highest_bidder].name }}</div>
+      <div><%= t('game.bidding.title') %></div>
+      <div><%= t('game.bidding.current_bidder') %>: {{ game.players[game.current_bidder].name }}</div>
+      <div><%= t('game.bidding.highest_bidder') %>: {{ game.highest_bid }} -- {{ game.players[game.highest_bidder].name }}</div>
       <div v-if='game.current_bidder == player.index'>
-        <button v-on:click='bid(20)'>raise 20!</button>
-        <button v-on:click='bid(15)'>raise 15!</button>
-        <button v-on:click='bid(10)'>raise 10!</button>
-        <button v-on:click='bid(5)'>raise 5!</button>
-        <button v-on:click='pass'>pass!</button>
+        <button v-on:click='bid(20)'><%= t('game.bidding.raise_20') %></button>
+        <button v-on:click='bid(15)'><%= t('game.bidding.raise_15') %></button>
+        <button v-on:click='bid(10)'><%= t('game.bidding.raise_10') %></button>
+        <button v-on:click='bid(5)'><%= t('game.bidding.raise_5') %></button>
+        <button v-on:click='pass'><%= t('game.bidding.pass') %></button>
       </div>
     </div>
     <div v-if="game.status == 'to_trump'">
-      <div>Ready to trump!</div>
-      <button v-if='game.highest_bidder == player.index' v-on:click='trump'>Trump!</button>
+      <div><%= t('game.to_trump.title') %></div>
+      <button v-if='game.highest_bidder == player.index' v-on:click='trump'><%= t('game.to_trump.trump') %></button>
     </div>
     <div v-if="game.status == 'to_play'">
-      <div>Ready to start the game!</div>
-      <button v-if='player.admin' v-on:click='start_game'>Start the game!</button>
+      <div><%= t('game.to_play.title') %></div>
+      <button v-if='player.admin' v-on:click='start_game'><%= t('game.to_play.start_game') %></button>
     </div>
     <div v-if="game.status == 'playing'">
-      <button v-if='game.next_to_play == player.index' v-on:click='play'>Play card!</button>
+      <button v-if='game.next_to_play == player.index' v-on:click='play'><%= t('game.playing.play') %></button>
     </div>
     <div v-if="game.status == 'done'">
-      <div>game is finished!</div>
+      <div><%= t('game.done.title') %></div>
     </div>
   </div>
   <div v-else>
-    <button v-on:click='join'>Join!</button>
+    <button v-on:click='join'><%= t('game.join') %></button>
   </div>
 </div>

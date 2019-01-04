@@ -5,37 +5,44 @@ fa:
     start_new_game: شروع یه بازی جدید
   start_new_game:
     title: شروع یه بازی جدید
-  show_game:
-    title: بازی شما
-    game_control: کنترل بازی
-    share_link: لینک اشتراک
-    copy_link: کپی
-    participants: شرکت کننده ها
-    start: شروع بازی
-    finish: پایان بازی
-    restart: یه دور جدید
+  game:
     join: وارد بازی شو
-    not_started: بازی هنوز شروع نشده
-    your_role: نقش شما
-    number_of_spies: تعداد جاسوس ها
-    location: مکان
+    playing:
+      title: بازی در حال انجام شدنه
+      game_suit: حکم
+      your_team_score: امتیاز تیم شما
+      other_team_score: امتیاز تیم مقابل
+      your_hand: دست شما
+      played_set: زمین
+      widow_set: کارت های اضافی
+      play: بازی کن
+    to_name:
+      title: منتظر بقیه بازیکن ها
+    to_deal:
+      title: منتظر کارت دارن
+      deal: کارت ها رو پخش کن
+    to_bid:
+      title: منتظر شروع خوندن
+      start_bidding: خوندن رو شروع کن
+    bidding:
+      title: در حال خوندن
+      current_bidder: نفر بعدی
+      highest_bidder: بیشترین خوندن
+      raise_20: ۲۰ تا بیشتر
+      raise_15: ۱۵ تا بیشتر
+      raise_10: ۱۰ تا بیشتر
+      raise_5: ۵ تا بیشتر
+      pass: پاس
+    to_trump:
+      title: منتظر عوض کردن دست
+      trump: دست رو عوض کن
+    to_play:
+      title: منتظر شروع بازی
+      start_game: بازی رو شروع کن
+    done:
+      title: بازی تمام شد
+
+
   user_name:
     title: اسم شما
     submit: ادامه
-
-  roles:
-    spy: جاسوس
-    head_teacher: مدیر مدرسه
-    teacher: معلم
-    parent: اولیا
-    student: دانش آموز
-    doorman: سرایدار
-    manager: مدیر
-    chef: سرآشپز
-    waiter: گارسون
-    waitress: گارسون
-    next_table: میز بغلی
-
-  locations:
-    school: مدرسه
-    restaurant: رستوران
