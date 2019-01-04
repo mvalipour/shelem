@@ -18,6 +18,8 @@ fa:
       play: بازی کن
     to_name:
       title: منتظر بقیه بازیکن ها
+      share_link: اشتراک لینک بازی
+      copy_link: کپی
     to_deal:
       title: منتظر کارت دارن
       deal: کارت ها رو پخش کن

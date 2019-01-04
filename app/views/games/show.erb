@@ -15,10 +15,25 @@
     </div>
 
     <div v-if="game.status == 'to_name'">
-      <div><%= t('game.to_name.title') %></div>
-      <ol>
-        <li v-for='player in game.players'>{{ player.name }}</li>
-      </ol>
+      <h4><%= t('game.to_name.title') %></h4>
+      <div>
+        <div v-for='player in game.players' class='player-card'>
+          <img v-bind:src="['https://api.adorable.io/avatars/64/', player.uid ,'.png'].join('')" />
+          {{ player.name }}
+        </div>
+      </div>
+      <div v-if='player.admin'>
+        <h4>
+          <%= t('game.to_name.share_link') %>
+        </h4>
+
+        <div class='share-link'>
+          <input id='foo' type='text' readonly='true' value='<%= game_url(@game_uid) %>' />
+          <button class="clipboard-btn" data-clipboard-target="#foo">
+            <%= t('game.to_name.copy_link') %>
+          </button>
+        </div>
+      </div>
     </div>
     <div v-if="game.status == 'to_deal'">
       <div><%= t('game.to_deal.title') %></div>

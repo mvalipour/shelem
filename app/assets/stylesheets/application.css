@@ -17,6 +17,8 @@ h1 img {
   outline: dashed 1px #777;
 }
 
+.player-card { margin-bottom: 0.5em;}
+
 .card-set .played-card img,
 .player-card img {
   vertical-align: middle;
