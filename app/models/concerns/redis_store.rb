@@ -22,6 +22,9 @@ module RedisStore
   end
 
   def save!(uid)
-    REDIS_CLIENT.set(self.class.redis_key(uid), to_h.to_json)
+    self.class.redis_key(uid).tap do |key|
+      REDIS_CLIENT.set(key, to_h.to_json)
+      REDIS_CLIENT.expire(key, 1.hour.to_i)
+    end
   end
 end
