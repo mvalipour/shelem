@@ -17,9 +17,8 @@
           {{ game.players[game.next_to_play].name }}
         </span>
       </div>
-      <div>
-        scores: {{ game.scores }}
-      </div>
+      <div>Your team score: {{ game.scores[player.index % 2] }}</div>
+      <div>Other team score: {{ game.scores[(player.index + 1) % 2] }}</div>
     </div>
 
     <div v-if="game.status == 'to_name'">
@@ -70,7 +69,10 @@
       <div>Currently bidding: {{ game.players[game.current_bidder].name }}</div>
       <div>Highest bid: {{ game.highest_bid }} by {{ game.players[game.highest_bidder].name }}</div>
       <div v-if='game.current_bidder == player.index'>
-        <button v-on:click='bid'>raise 5!</button>
+        <button v-on:click='bid(20)'>raise 20!</button>
+        <button v-on:click='bid(15)'>raise 15!</button>
+        <button v-on:click='bid(10)'>raise 10!</button>
+        <button v-on:click='bid(5)'>raise 5!</button>
         <button v-on:click='pass'>pass!</button>
       </div>
     </div>

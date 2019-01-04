@@ -46,7 +46,7 @@ ready(() => {
       join() { this.action('join').then(() => document.location.reload()) },
       deal() { this.action('deal') },
       start_bidding() { this.action('start_bidding') },
-      bid() { this.action('bid', { raise: 5 }) },
+      bid(r) { this.action('bid', { raise: r }) },
       pass() { this.action('pass') },
       trump() {
         console.log(this.selectedTrumpCards);
