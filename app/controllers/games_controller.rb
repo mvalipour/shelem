@@ -1,9 +1,9 @@
 class GamesController < ApplicationController
-  ADMIN_ACTIONS = %i(deal start_bidding start_game)
+  ADMIN_ACTIONS = %i(deal start_bidding start_game restart)
   PLAYER_ACTIONS = %i(join bid pass trump play)
+  
   before_action :ensure_user_uid
   before_action :ensure_admin!, only: ADMIN_ACTIONS
-
   after_action :publish_event, only: PLAYER_ACTIONS + ADMIN_ACTIONS
 
   def show
@@ -51,6 +51,10 @@ class GamesController < ApplicationController
 
   def play
     change_game { |g| g.play!(user_uid, params.require(:card)) }
+  end
+
+  def restart
+    change_game { |g| g.restart! }
   end
 
   private

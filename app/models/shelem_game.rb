@@ -118,6 +118,15 @@ class ShelemGame
     end
   end
 
+  def restart!
+    ensure_status!(:done, proceed_if: false) do
+      self.status = :to_deal
+      @bidding = nil
+      @dealing = nil
+      @game = nil
+    end
+  end
+
   def ensure_status!(status, only_if: true, proceed_if: true)
     raise 'INVALID_ACTION' unless status == status && evaluate(only_if)
     yield if block_given?

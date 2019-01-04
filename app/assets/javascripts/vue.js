@@ -63,6 +63,7 @@ ready(() => {
       },
       start_game() { this.action('start_game') },
       play() { this.action('play', { card: this.selectedCard }) },
+      restart() { this.action('restart') },
 
       selectCard(n) {
         if(this.game.status == 'playing') {

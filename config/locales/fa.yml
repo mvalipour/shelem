@@ -44,6 +44,7 @@ fa:
       start_game: بازی رو شروع کن
     done:
       title: بازی تمام شد
+      restart: بازی جدید با همین تیم ها
 
 
   user_name:
