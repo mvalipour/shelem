@@ -20,7 +20,7 @@ class ShelemGameSerializer < ActiveModel::Serializer
   def game_data
     {
       uid: game_uid,
-      players: (players&.names || []),
+      players: (players ? players.to_h.map { |uid, name| { uid: uid, name: name }} : []),
       status: object.status,
       widow_set: (dealing.widow_set&.to_h if dealing),
 

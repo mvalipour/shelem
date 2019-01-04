@@ -24,6 +24,11 @@ module Playing
       (@bits & (1 << card.to_i)) > 0
     end
 
+    def include_suit?(suit)
+      return false unless (suit_ix = Card::SUITS.find_index(suit))
+      (0..12).any?{ |ix| include?(suit_ix * 13 + ix) }
+    end
+
     def delete(card)
       @bits &= ~(1 << card.to_i)
     end

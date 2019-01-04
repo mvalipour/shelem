@@ -1,5 +1,7 @@
 .pc:after { content: "\1F0A0"; font-size: 5em; line-height: 100%;}
 
+.pc.selected:after { color: gold !important; }
+
 /* hearts */
 .pc.no-0:after  { content: "\1F0A2"; color: indianred; }
 .pc.no-1:after  { content: "\1F0A3"; color: indianred; }

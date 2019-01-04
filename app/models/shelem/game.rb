@@ -59,7 +59,7 @@ module Shelem
         @game_suit_i = card.suit_i unless @game_suit_i
       else
         # can the player has a card for round_suit but not playing it
-        if round_suit && card.suit != round_suit && cards_in_hand.map(&:suit).include?(round_suit)
+        if round_suit && card.suit != round_suit && cards_in_hand.include_suit?(round_suit)
           raise 'MUST PLAY LEAD SUIT'
         end
       end
@@ -95,7 +95,7 @@ module Shelem
 
     def find_round_winner
       # re-order round cards to align for team members
-      round_set.rotate(round_lead).map do |c|
+      round_set.rotate(-round_lead).map do |c|
         # has player cut hand with a game suit?
         if round_suit != game_suit && c.suit == game_suit
           # add 100 to ensure it's gonna be higher than any of the round suit ranks

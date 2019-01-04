@@ -8,7 +8,7 @@ ready(() => {
   const data = meta('vue-data') || '{}'
   const app = new Vue({
     el: '#vue-app',
-    data: JSON.parse(data),
+    data: Object.assign(JSON.parse(data), { selectedCard: -1 }),
     methods: {
       changeData(newdata) {
         Object.keys(this.$data).forEach(key => this.$data[key] = null);
@@ -35,7 +35,9 @@ ready(() => {
         })
       },
       start_game() { this.action('start_game') },
-      play() { this.action('play', { card: this.player.cards.flat()[0] }) },
+      play() { this.action('play', { card: this.selectedCard }) },
+
+      selectCard(n) { this.selectedCard = this.selectedCard == n ? -1 : n; }
     }
   });
   window.VUE_APP = app;
