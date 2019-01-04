@@ -12,27 +12,23 @@
         <h4><%= t('game.playing.title') %></h4>
         <h4><%= t('game.playing.game_suit') %>: <span v-bind:class="['pc', 'suit-' + game.suit]"></span> </h4>
       </div>
-      <div>
-        <%= t('game.playing.your_team') %>:
-        <div v-for='player in game.players.filter((i, ix) => ix % 2 == player.index % 2)' class='player-card'>
-          <player v-bind:data='player'></player>
+      <div class='score-info'>
+        <div class='my-team'>
+          <div v-for='player in game.players.filter((i, ix) => ix % 2 == player.index % 2)' class='player-card'>
+            <player v-bind:data='player' v-bind:name='false'></player>
+          </div>
+          <span v-if="game.scores" class='score'>
+            {{ game.scores[player.index % 2] }}
+          </span>
         </div>
-
-        <span v-if="game.scores">
-          -- <%= t('game.playing.score') %>:
-          {{ game.scores[player.index % 2] }}
-        </span>
-      </div>
-      <div>
-        <%= t('game.playing.other_team') %>:
-        <div v-for='player in game.players.filter((i, ix) => ix % 2 != player.index % 2)' class='player-card'>
-          <player v-bind:data='player'></player>
+        <div class='other-team'>
+          <span v-if="game.scores" class='score'>
+            {{ game.scores[(player.index + 1) % 2] }}
+          </span>
+          <div v-for='player in game.players.filter((i, ix) => ix % 2 != player.index % 2)' class='player-card'>
+            <player v-bind:data='player' v-bind:name='false'></player>
+          </div>
         </div>
-
-        <span v-if="game.scores">
-          -- <%= t('game.playing.score') %>:
-          {{ game.scores[(player.index + 1) % 2] }}
-        </span>
       </div>
     </div>
 
