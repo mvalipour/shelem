@@ -1,3 +1,3 @@
 require 'redis'
 
-REDIS_CLIENT = Redis.new
+REDIS_CLIENT = Redis.new(url: ENV['REDISCLOUD_URL'])
