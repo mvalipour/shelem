@@ -69,7 +69,12 @@ ready(() => {
 
       selectCard(n) {
         if(this.game.status == 'playing') {
-          this.selectedCard = this.selectedCard == n ? -1 : n;
+          if(this.selectedCard == n) {
+            this.play();
+            this.selectedCard = -1;
+          } else {
+            this.selectedCard = n
+          }
         }
         else if(this.game.status == 'to_trump') {
           this.selectedCards = toggleElement(this.selectedCards, n)

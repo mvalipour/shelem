@@ -5,7 +5,11 @@
   vertical-align: middle;
 }
 
-.pc.selected:after { color: gold !important; }
+.pc.selected {
+  transform: scale(1.3);
+  display: inline-block;
+  background: white;
+}
 
 .pc.no-null { color: #aaa; }
 
