@@ -24,7 +24,7 @@ module RedisStore
   def save!(uid)
     self.class.redis_key(uid).tap do |key|
       REDIS_CLIENT.set(key, to_h.to_json)
-      REDIS_CLIENT.expire(key, 1.hour.to_i)
+      REDIS_CLIENT.expire(key, 1.day.to_i)
     end
   end
 end

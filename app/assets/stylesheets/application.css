@@ -18,17 +18,20 @@ h1 img {
 }
 
 .player-card { margin-bottom: 0.5em;}
-.score-info {
+h4 { margin: 0; }
+.score-info, h4 {
   position: relative;
+  height: 2em;
+  text-align: center;
 }
-.score-info:before {
-    content: '';
-    height: 1em;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    border-bottom: dashed 1px #999;
+.score-info:before, h4:before {
+  content: '';
+  height: 1em;
+  position: absolute;
+  top: 0;
+  left: -1em;
+  right: -1em;
+  border-bottom: dashed 1px #999;
 }
 .score-info .player-card { display: inline-block; margin-left: -1px; }
 .score-info .my-team {
@@ -41,7 +44,8 @@ h1 img {
   left: 0;
   top: 0;
 }
-.score-info .score {
+.score-info .info {
+  position: relative;
   font-family: monospace;
   font-weight: bold;
   display: inline-block;
@@ -141,7 +145,7 @@ ul.participants li .desc {
   font-size: 0.75em;
 }
 
-.card-set { direction: ltr; }
+.card-set { direction: ltr; text-align: center; }
 .card-set .suit-set { white-space: nowrap; display: inline-block; padding-right: 1em;}
 .card-set .played-card {
   display: inline-block; text-align: center;

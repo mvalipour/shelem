@@ -10,6 +10,7 @@
 .pc.no-null { color: #aaa; }
 
 /* suits */
+.pc.suit-undefined:after   { content: "\22A1"; font-size: 2em; }
 .pc.suit-hearts:after   { content: "\2665"; font-size: 2em; color: indianred; }
 .pc.suit-spades:after   { content: "\2660"; font-size: 2em; }
 .pc.suit-diamonds:after { content: "\2666"; font-size: 2em; color: indianred; }
