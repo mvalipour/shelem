@@ -7,7 +7,7 @@
 <div id='vue-app'>
   <!-- <pre>{{ player }}</pre> -->
   <div v-if='player.joined'>
-    <div v-if="game.status != 'to_name'" class='game-info'>
+    <div class='game-info'>
       <div class='score-info'>
         <span v-if="game.status == 'playing' && game.suit" class='info'>
           <span v-bind:class="['pc', 'suit-' + game.suit]"></span>
@@ -33,16 +33,8 @@
 
     <div v-if="game.status == 'to_name'">
       <h4><%= t('game.to_name.title') %></h4>
-      <div>
-        <div v-for='player in game.players' class='player-card'>
-          <player v-bind:data='player'></player>
-        </div>
-      </div>
       <div v-if='player.admin'>
-        <h4>
-          <%= t('game.to_name.share_link') %>
-        </h4>
-
+        <h4><%= t('game.to_name.share_link') %></h4>
         <div class='share-link'>
           <input id='foo' type='text' readonly='true' value='<%= game_url(@game_uid) %>' />
           <button class="clipboard-btn" data-clipboard-target="#foo">
