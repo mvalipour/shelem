@@ -89,7 +89,7 @@ module Shelem
       game_scores[round_winner_team] += round_set.sum(&:score) + 5
 
       # reset round
-      round_suit = nil
+      @round_suit_i = nil
       round_set.clear
     end
 

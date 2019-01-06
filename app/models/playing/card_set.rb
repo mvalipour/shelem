@@ -37,12 +37,8 @@ module Playing
       @bits |= (1 << card.to_i)
     end
 
-    def cards
-      (0..51).select(&method(:include?)).map(&Card.method(:new))
-    end
-
     def to_h
-      cards.group_by(&:suit).map{ |_, c| c.map(&:to_i) }
+      (0..51).to_a.in_groups_of(13).map{ |g| g.select(&method(:include?)) }
     end
   end
 end

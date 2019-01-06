@@ -33,6 +33,7 @@ ready(() => {
     data: Object.assign(JSON.parse(data), default_data),
     methods: {
       cardEnabled(number) {
+        if(typeof this.game.round_suit_i !== 'number') { return true; }
         return this.player.cards[this.game.round_suit_i].length > 0 ?
           Math.floor(number / 13) ==  this.game.round_suit_i :
           true;
@@ -76,7 +77,9 @@ ready(() => {
         if(this.game.status == 'playing') {
           if(!this.cardEnabled(n)) { return; }
           if(this.selectedCard == n) {
-            this.play();
+            if(this.game.next_to_play == this.player.index) {
+              this.play();
+            }
             this.selectedCard = -1;
           } else {
             this.selectedCard = n
