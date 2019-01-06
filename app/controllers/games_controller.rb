@@ -1,7 +1,7 @@
 class GamesController < ApplicationController
   ADMIN_ACTIONS = %i(deal start_bidding start_game restart)
   PLAYER_ACTIONS = %i(join bid pass trump play)
-  
+
   before_action :ensure_user_uid
   before_action :ensure_admin!, only: ADMIN_ACTIONS
   after_action :publish_event, only: PLAYER_ACTIONS + ADMIN_ACTIONS
@@ -10,6 +10,10 @@ class GamesController < ApplicationController
     @game_uid = game_uid
     @game = game
     @view_data = view_data
+  end
+
+  def data
+    render json: view_data
   end
 
   def create
