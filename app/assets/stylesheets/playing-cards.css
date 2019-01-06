@@ -20,35 +20,35 @@
 .pc.suit-diamonds:after { content: "\2666"; font-size: 2em; color: indianred; }
 .pc.suit-clubs:after    { content: "\2663"; font-size: 2em; }
 
-/* hearts */
-.pc.no-0:after  { content: "\1F0A2"; color: indianred; }
-.pc.no-1:after  { content: "\1F0A3"; color: indianred; }
-.pc.no-2:after  { content: "\1F0A4"; color: indianred; }
-.pc.no-3:after  { content: "\1F0A5"; color: indianred; }
-.pc.no-4:after  { content: "\1F0A6"; color: indianred; }
-.pc.no-5:after  { content: "\1F0A7"; color: indianred; }
-.pc.no-6:after  { content: "\1F0A8"; color: indianred; }
-.pc.no-7:after  { content: "\1F0A9"; color: indianred; }
-.pc.no-8:after  { content: "\1F0Aa"; color: indianred; }
-.pc.no-9:after  { content: "\1F0Ab"; color: indianred; }
-.pc.no-10:after { content: "\1F0Ad"; color: indianred; }
-.pc.no-11:after { content: "\1F0Ae"; color: indianred; }
-.pc.no-12:after { content: "\1F0A1"; color: indianred; }
-
 /* spades */
-.pc.no-13:after { content: "\1F0B2" }
-.pc.no-14:after { content: "\1F0B3" }
-.pc.no-15:after { content: "\1F0B4" }
-.pc.no-16:after { content: "\1F0B5" }
-.pc.no-17:after { content: "\1F0B6" }
-.pc.no-18:after { content: "\1F0B7" }
-.pc.no-19:after { content: "\1F0B8" }
-.pc.no-20:after { content: "\1F0B9" }
-.pc.no-21:after { content: "\1F0Ba" }
-.pc.no-22:after { content: "\1F0Bb" }
-.pc.no-23:after { content: "\1F0Bd" }
-.pc.no-24:after { content: "\1F0Be" }
-.pc.no-25:after { content: "\1F0B1" }
+.pc.no-0:after  { content: "\1F0A2"; }
+.pc.no-1:after  { content: "\1F0A3"; }
+.pc.no-2:after  { content: "\1F0A4"; }
+.pc.no-3:after  { content: "\1F0A5"; }
+.pc.no-4:after  { content: "\1F0A6"; }
+.pc.no-5:after  { content: "\1F0A7"; }
+.pc.no-6:after  { content: "\1F0A8"; }
+.pc.no-7:after  { content: "\1F0A9"; }
+.pc.no-8:after  { content: "\1F0Aa"; }
+.pc.no-9:after  { content: "\1F0Ab"; }
+.pc.no-10:after { content: "\1F0Ad"; }
+.pc.no-11:after { content: "\1F0Ae"; }
+.pc.no-12:after { content: "\1F0A1"; }
+
+/* hearts */
+.pc.no-13:after { content: "\1F0B2"; color: indianred; }
+.pc.no-14:after { content: "\1F0B3"; color: indianred; }
+.pc.no-15:after { content: "\1F0B4"; color: indianred; }
+.pc.no-16:after { content: "\1F0B5"; color: indianred; }
+.pc.no-17:after { content: "\1F0B6"; color: indianred; }
+.pc.no-18:after { content: "\1F0B7"; color: indianred; }
+.pc.no-19:after { content: "\1F0B8"; color: indianred; }
+.pc.no-20:after { content: "\1F0B9"; color: indianred; }
+.pc.no-21:after { content: "\1F0Ba"; color: indianred; }
+.pc.no-22:after { content: "\1F0Bb"; color: indianred; }
+.pc.no-23:after { content: "\1F0Bd"; color: indianred; }
+.pc.no-24:after { content: "\1F0Be"; color: indianred; }
+.pc.no-25:after { content: "\1F0B1"; color: indianred; }
 
 /* diamonds */
 .pc.no-26:after { content: "\1F0C2"; color: indianred; }
@@ -66,16 +66,16 @@
 .pc.no-38:after { content: "\1F0C1"; color: indianred; }
 
 /* clubs */
-.pc.no-39:after { content: "\1F0D2" }
-.pc.no-40:after { content: "\1F0D3" }
-.pc.no-41:after { content: "\1F0D4" }
-.pc.no-42:after { content: "\1F0D5" }
-.pc.no-43:after { content: "\1F0D6" }
-.pc.no-44:after { content: "\1F0D7" }
-.pc.no-45:after { content: "\1F0D8" }
-.pc.no-46:after { content: "\1F0D9" }
-.pc.no-47:after { content: "\1F0Da" }
-.pc.no-48:after { content: "\1F0Db" }
-.pc.no-49:after { content: "\1F0Dd" }
-.pc.no-50:after { content: "\1F0De" }
-.pc.no-51:after { content: "\1F0D1" }
+.pc.no-39:after { content: "\1F0D2"; }
+.pc.no-40:after { content: "\1F0D3"; }
+.pc.no-41:after { content: "\1F0D4"; }
+.pc.no-42:after { content: "\1F0D5"; }
+.pc.no-43:after { content: "\1F0D6"; }
+.pc.no-44:after { content: "\1F0D7"; }
+.pc.no-45:after { content: "\1F0D8"; }
+.pc.no-46:after { content: "\1F0D9"; }
+.pc.no-47:after { content: "\1F0Da"; }
+.pc.no-48:after { content: "\1F0Db"; }
+.pc.no-49:after { content: "\1F0Dd"; }
+.pc.no-50:after { content: "\1F0De"; }
+.pc.no-51:after { content: "\1F0D1"; }

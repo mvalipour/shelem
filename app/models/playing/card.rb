@@ -2,7 +2,7 @@ module Playing
   class Card
     FACES = %w(2 3 4 5 6 7 8 9 10) + %w(j q k a)
     SCORES = %w(0 0 0 5 0 0 0 0 10 0 0 0 10).map(&:to_i)
-    SUITS = %i(hearts spades diamonds clubs)
+    SUITS = %i(spades hearts diamonds clubs)
 
     class << self
       def all

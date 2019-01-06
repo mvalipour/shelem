@@ -38,7 +38,12 @@ module Playing
     end
 
     def cards
-      (0..51).select(&method(:include?)).map(&Card.method(:new))
+      [
+        (13..25).select(&method(:include?)), # hearts
+        (0..12).select(&method(:include?)), #  spades
+        (26..38).select(&method(:include?)), # diamonds
+        (39..51).select(&method(:include?)) # clubs
+      ].flatten.map(&Card.method(:new))
     end
 
     def to_h
