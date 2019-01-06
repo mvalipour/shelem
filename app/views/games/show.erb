@@ -81,15 +81,10 @@
           <%= t('game.playing.your_hand') %>
           <span v-if="game.status == 'playing' && game.next_to_play == player.index">(<%= t('game.playing.your_turn') %>)</span>
         </h4>
-        <h4>
-          <span v-if="game.status == 'playing' && game.suit" class='info'>
-            <%= t('game.playing.game_suit') %>
-            <span v-bind:class="['pc', 'suit-' + game.suit]"></span>
-          </span>
-        </h4>
         <div class='card-set'>
           <span class='suit-set' v-for='cards in player.cards'>
-            <span v-for='number in cards' v-bind:class="['pc', 'no-'+number, (selectedCard == number || selectedCards.indexOf(number) >= 0) ? 'selected' : '']" v-on:click='selectCard(number)'></span>
+            <span v-for='number in cards' v-bind:class="['pc', 'no-'+number, (selectedCard == number || selectedCards.indexOf(number) >= 0) ? 'selected' : '', cardEnabled(number) ? '' : 'disabled']" v-on:click='selectCard(number)'>
+            </span>
           </span>
         </div>
       </div>

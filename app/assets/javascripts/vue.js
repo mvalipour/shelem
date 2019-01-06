@@ -32,6 +32,11 @@ ready(() => {
     el: '#vue-app',
     data: Object.assign(JSON.parse(data), default_data),
     methods: {
+      cardEnabled(number) {
+        return this.player.cards[this.game.round_suit_i].length > 0 ?
+          Math.floor(number / 13) ==  this.game.round_suit_i :
+          true;
+      },
       changeData(newdata) {
         Object.keys(this.$data).forEach(key => this.$data[key] = null);
         Object.entries(Object.assign(newdata, default_data)).forEach(entry => Vue.set(this.$data, entry[0], entry[1]));
@@ -69,6 +74,7 @@ ready(() => {
 
       selectCard(n) {
         if(this.game.status == 'playing') {
+          if(!this.cardEnabled(n)) { return; }
           if(this.selectedCard == n) {
             this.play();
             this.selectedCard = -1;

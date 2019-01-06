@@ -12,6 +12,7 @@
 }
 
 .pc.no-null { color: #aaa; }
+.pc.disabled:after { filter: opacity(0.5); }
 
 /* suits */
 .pc.suit-undefined:after   { content: "\22A1"; font-size: 2em; }
