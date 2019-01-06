@@ -9,22 +9,22 @@
   <div v-if='player.joined'>
     <div class='game-info'>
       <div class='score-info'>
-        <span v-if="game.status == 'playing' && game.suit" class='info'>
-          <span v-bind:class="['pc', 'suit-' + game.suit]"></span>
+        <span class='info'>
+          ({{ game.total_scores[0] }}) &mdash; {{ game.total_games }} &mdash; ({{ game.total_scores[1] }})
         </span>
         <div class='my-team'>
-          <div v-for='player in game.players.filter((i, ix) => ix % 2 == player.index % 2)' class='player-card'>
+          <div v-for='player in game.players.filter((i, ix) => ix % 2 == 0)' class='player-card'>
             <player v-bind:data='player' v-bind:name='false'></player>
           </div>
           <span v-if="game.scores" class='info'>
-            {{ game.scores[player.index % 2] }}
+            {{ game.scores[0] }}
           </span>
         </div>
         <div class='other-team'>
           <span v-if="game.scores" class='info'>
-            {{ game.scores[(player.index + 1) % 2] }}
+            {{ game.scores[1] }}
           </span>
-          <div v-for='player in game.players.filter((i, ix) => ix % 2 != player.index % 2)' class='player-card'>
+          <div v-for='player in game.players.filter((i, ix) => ix % 2 == 1)' class='player-card'>
             <player v-bind:data='player' v-bind:name='false'></player>
           </div>
         </div>
@@ -72,6 +72,12 @@
         <h4>
           <%= t('game.playing.your_hand') %>
           <span v-if="game.status == 'playing' && game.next_to_play == player.index">(<%= t('game.playing.your_turn') %>)</span>
+        </h4>
+        <h4>
+          <span v-if="game.status == 'playing' && game.suit" class='info'>
+            <%= t('game.playing.game_suit') %>
+            <span v-bind:class="['pc', 'suit-' + game.suit]"></span>
+          </span>
         </h4>
         <div class='card-set'>
           <span class='suit-set' v-for='cards in player.cards'>

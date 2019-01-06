@@ -44,7 +44,8 @@ h4 { margin: 0; }
   left: 0;
   top: 0;
 }
-.score-info .info {
+.score-info .info,
+h4 .info {
   position: relative;
   font-family: monospace;
   font-weight: bold;

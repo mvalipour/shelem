@@ -22,7 +22,10 @@ class ShelemGameSerializer < ActiveModel::Serializer
       uid: game_uid,
       players: (players ? players.to_h.map { |uid, name| { uid: uid, name: name }} : []),
       status: object.status,
-      widow_set: (dealing.widow_set&.to_h if dealing),
+      total_scores: object.total_scores,
+      total_games: object.total_games,
+
+      widow_set: (dealing.widow_set.to_a if dealing),
 
       current_bidder: (bidding.current_bidder if bidding),
       highest_bidder: (bidding.highest_bidder if bidding),

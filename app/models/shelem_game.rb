@@ -3,14 +3,16 @@ class ShelemGame
   include Minifier
   include Enums
 
-  PROPS = %i(admin_uid status_i players dealing bidding game)
+  PROPS = %i(admin_uid status_i total_scores total_games players dealing bidding game)
   STATUSES = %i(to_name to_deal to_bid bidding to_trump to_play playing done)
 
   enum status: STATUSES
 
-  def initialize(admin_uid: nil, status_i: 0, players: nil, dealing: nil, bidding: nil, game: nil)
+  def initialize(admin_uid: nil, status_i: 0, total_scores: [0, 0], total_games: 0, players: nil, dealing: nil, bidding: nil, game: nil)
     @admin_uid = admin_uid
     @status_i = status_i
+    @total_scores = total_scores
+    @total_games = total_games
     @players = Shelem::Players.new(players) if players.present?
     @dealing = Shelem::Dealing.parse(dealing) if dealing.present?
     @bidding = Shelem::Bidding.parse(bidding) if bidding.present?
@@ -23,6 +25,8 @@ class ShelemGame
     {
       admin_uid: admin_uid,
       status_i: status_i,
+      total_scores:  total_scores,
+      total_games: total_games,
       players: players.to_h,
       dealing: dealing.to_h,
       bidding: bidding.to_h,
