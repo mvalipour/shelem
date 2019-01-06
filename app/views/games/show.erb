@@ -13,10 +13,10 @@
           ({{ game.total_scores[0] }}) &mdash; {{ game.total_games }} &mdash; ({{ game.total_scores[1] }})
         </span>
       </h4>
-      <div class='score-info'>
+      <h4>
         <div class='my-team'>
           <div v-for='player in game.players.filter((i, ix) => ix % 2 == 0)' class='player-card'>
-            <player v-bind:data='player' v-bind:name='false'></player>
+            <player v-bind:data='player'></player>
           </div>
           <span v-if="game.scores" class='info'>
             {{ game.scores[0] }}
@@ -27,10 +27,10 @@
             {{ game.scores[1] }}
           </span>
           <div v-for='player in game.players.filter((i, ix) => ix % 2 == 1)' class='player-card'>
-            <player v-bind:data='player' v-bind:name='false'></player>
+            <player v-bind:data='player'></player>
           </div>
         </div>
-      </div>
+      </h4>
     </div>
 
     <div v-if="game.status == 'to_name'">
@@ -56,7 +56,7 @@
         </h4>
         <div class='card-set'>
           <div v-for='(number, index) in game.played_set' class='played-card'>
-            <player v-bind:data='game.players[(game.round_lead + index) % 4]' v-bind:name='false'></player>
+            <player v-bind:class='{ current: game.next_to_play == index }' v-bind:data='game.players[(game.round_lead + index) % 4]'></player>
             <div v-bind:class="['pc', 'no-'+number]"></div>
           </div>
         </div>
@@ -95,20 +95,27 @@
     </div>
     <div v-if="game.status == 'bidding'">
       <h4><%= t('game.bidding.title') %></h4>
-      <div>
-        <%= t('game.bidding.current_bidder') %>:
-        <player v-bind:data='game.players[game.current_bidder]'></player>
-      </div>
-      <div>
-        <%= t('game.bidding.highest_bidder') %>:
-        {{ game.highest_bid }} --
-        <player v-bind:data='game.players[game.highest_bidder]'></player>
-      </div>
+      <h4 class='bidding'>
+        <div class='my-team'>
+          <player v-bind:class='{ current: game.current_bidder == index }' v-bind:data='player' v-for='(player, index) in game.players' v-if='index % 2 == 0'>
+            <span v-if='game.bids[index] >= 100' class='info'> {{ game.bids[index] }} </span>
+            <span v-else-if='game.bids[index] >= 0'>?</span>
+            <span v-else>&empty;</span>
+          </player>
+        </div>
+        <div class='other-team'>
+          <player v-bind:class='{ current: game.current_bidder == index }' v-bind:data='player' v-for='(player, index) in game.players' v-if='index % 2 == 1'>
+            <span v-if='game.bids[index] >= 100' class='info'> {{ game.bids[index] }} </span>
+            <span v-else-if='game.bids[index] >= 0'>?</span>
+            <span v-else>&empty;</span>
+          </player>
+        </div>
+      </h4>
       <div v-if='game.current_bidder == player.index'>
-        <button v-on:click='bid(20)'><%= t('game.bidding.raise_20') %></button>
-        <button v-on:click='bid(15)'><%= t('game.bidding.raise_15') %></button>
-        <button v-on:click='bid(10)'><%= t('game.bidding.raise_10') %></button>
-        <button v-on:click='bid(5)'><%= t('game.bidding.raise_5') %></button>
+        <button v-on:click='bid(20)' v-if='game.highest_bid <= 145'>{{ game.highest_bid + 20 }}</button>
+        <button v-on:click='bid(15)' v-if='game.highest_bid <= 150'>{{ game.highest_bid + 15 }}</button>
+        <button v-on:click='bid(10)' v-if='game.highest_bid <= 155'>{{ game.highest_bid + 10 }}</button>
+        <button v-on:click='bid(5)' v-if='game.highest_bid <= 160'>{{ game.highest_bid + 5 }}</button>
         <button v-on:click='pass'><%= t('game.bidding.pass') %></button>
       </div>
     </div>

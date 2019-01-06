@@ -27,6 +27,7 @@ class ShelemGameSerializer < ActiveModel::Serializer
 
       widow_set: (dealing.widow_set.to_h if dealing),
 
+      bids: (bidding.bids if bidding),
       current_bidder: (bidding.current_bidder if bidding),
       highest_bidder: (bidding.highest_bidder if bidding),
       highest_bid: (bidding.highest_bid if bidding),

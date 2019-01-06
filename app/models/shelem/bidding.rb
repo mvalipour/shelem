@@ -8,8 +8,8 @@ module Shelem
     BID_MAX = 165
     BID_STEP = 5
 
-    def initialize(bids: [BID_MIN] * 4, current_bidder: 0)
-      @bids = bids
+    def initialize(bids: nil, current_bidder: 0)
+      @bids = bids || ([BID_STEP] * 4).tap{ |arr| arr[current_bidder] = BID_MIN }
       @current_bidder = current_bidder
     end
 
@@ -29,8 +29,13 @@ module Shelem
     def bid(raise)
       raise 'INVALID_RAISE' unless raise > 0 && raise % BID_STEP == 0 && (highest_bid + raise) <= BID_MAX
 
-      bids[current_bidder] = (highest_bid + raise)
-      move_next
+      if (highest_bid + raise) == 165
+        # pass everyone else
+        @bids = ([0] * 4).tap{ |arr| arr[current_bidder] = 165 }
+      else
+        bids[current_bidder] = (highest_bid + raise)
+        move_next
+      end
     end
 
     def pass

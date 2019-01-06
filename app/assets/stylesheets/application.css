@@ -18,13 +18,13 @@ h1 img {
 }
 
 .player-card { margin-bottom: 0.5em;}
-h4 { margin: 0; }
-.score-info, h4 {
+h4 { margin: 0; font-weight: normal; }
+h4 {
   position: relative;
   height: 2em;
   text-align: center;
 }
-.score-info:before, h4:before {
+h4:before {
   content: '';
   height: 1em;
   position: absolute;
@@ -33,18 +33,17 @@ h4 { margin: 0; }
   right: -1em;
   border-bottom: dashed 1px #999;
 }
-.score-info .player-card { display: inline-block; margin-left: -1px; }
-.score-info .my-team {
+h4 .player-card { display: inline-block; margin-left: -1px; }
+h4 .my-team {
   position: absolute;
   right: 0;
   top: 0;
 }
-.score-info .other-team {
+h4 .other-team {
   position: absolute;
   left: 0;
   top: 0;
 }
-.score-info .info,
 h4 .info {
   position: relative;
   font-family: monospace;
@@ -54,7 +53,9 @@ h4 .info {
   padding: 0 0.2em;
 }
 
-.card-set .played-card img,
+h4.bidding .my-team .player-card { width: 5em; text-align: right; }
+h4.bidding .other-team .player-card { width: 5em; text-align: left; direction: ltr; }
+
 .player-card img {
   vertical-align: middle;
   height: 1.8em;
@@ -62,6 +63,8 @@ h4 .info {
   border: solid 2px white;
   outline: dotted 1px #777;
 }
+
+.player-card.current img { outline: solid 3px gold; }
 
 .secondary {
   color: #ccc;
