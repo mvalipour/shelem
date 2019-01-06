@@ -25,7 +25,7 @@ class ShelemGame
     {
       admin_uid: admin_uid,
       status_i: status_i,
-      total_scores:  total_scores,
+      total_scores: total_scores,
       total_games: total_games,
       players: players.to_h,
       dealing: dealing.to_h,
@@ -57,7 +57,7 @@ class ShelemGame
 
   def start_bidding!
     ensure_status!(:to_bid) do
-      @bidding = Shelem::Bidding.new
+      @bidding = Shelem::Bidding.new(current_bidder: total_games % 4)
     end
   end
 
