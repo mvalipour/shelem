@@ -17,7 +17,7 @@ class GamesController < ApplicationController
       game.add_player!(user_uid, user_name)
     end
 
-    uid = game.create!
+    uid = game.save!
     redirect_to game_path(uid)
   end
 
@@ -97,9 +97,5 @@ class GamesController < ApplicationController
     unless [user_name, user_uid].all?(&:present?)
       redirect_to user_names_path(return_to: request.path)
     end
-  end
-
-  def create_params
-    params.permit(:age)
   end
 end
