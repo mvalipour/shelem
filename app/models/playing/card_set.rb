@@ -37,7 +37,7 @@ module Playing
       @bits |= (1 << card.to_i)
     end
 
-    def to_h
+    def to_a
       (0..51).to_a.in_groups_of(13).map{ |g| g.select(&method(:include?)) }
     end
   end

@@ -25,7 +25,7 @@ class ShelemGameSerializer < ActiveModel::Serializer
       total_scores: object.total_scores,
       total_games: object.total_games,
 
-      widow_set: (dealing.widow_set.to_h if dealing),
+      widow_set: (dealing.widow_set.to_a.flatten if dealing),
 
       bids: (bidding.bids if bidding),
       current_bidder: (bidding.current_bidder if bidding),
@@ -50,7 +50,7 @@ class ShelemGameSerializer < ActiveModel::Serializer
       index: index,
       joined: true,
       admin: object.admin_uid == player_uid,
-      cards: (dealing.player_sets[index]&.to_h if dealing),
+      cards: (dealing.player_sets[index]&.to_a if dealing),
       bid: (bidding.bids[index] if bidding)
     }.compact
   end
