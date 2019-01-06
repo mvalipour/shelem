@@ -120,6 +120,11 @@ class ShelemGame
     ensure_status!(:playing, only_if: can_play?(player_uid), proceed_if: :done?) do
       game.play(dealing.player_sets, Playing::Card.new(card))
     end
+
+    if done?
+      @total_scores = total_scores.zip(game.game_scores).map(&:sum)
+      @total_games += 1
+    end
   end
 
   def restart!

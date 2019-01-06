@@ -46,7 +46,7 @@ class GamesController < ApplicationController
   end
 
   def trump
-    change_game { |g| g.trump!(user_uid, params.require(:cards_in), params.require(:cards_out)) }
+    change_game { |g| g.trump!(user_uid, params.fetch(:cards_in, []), params.fetch(:cards_out, [])) }
   end
 
   def start_game
