@@ -126,7 +126,7 @@ class ShelemGame
     end
 
     if done?
-      @total_scores = total_scores.zip(game.game_scores).map(&:sum)
+      @total_scores = total_scores.zip(current_game_score).map(&:sum)
       @total_games += 1
     end
   end
@@ -138,6 +138,20 @@ class ShelemGame
   end
 
   private
+
+  def current_game_score
+    game.game_scores.clone.tap do |result|
+      bidder_team = bidding.highest_bidder % 2
+      bid = bidding.highest_bid
+      if result[bidder_team] >= bid
+        if bid == Shelem::Bidding::BID_MAX
+          result[(bidder_team + 1) % 2] = -bid
+        end
+      else
+        result[bidder_team] = -bid
+      end
+    end
+  end
 
   def do_restart!
     self.status = :to_deal
