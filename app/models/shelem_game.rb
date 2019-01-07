@@ -80,6 +80,10 @@ class ShelemGame
     ensure_status!(:bidding, only_if: can_bid(player_uid), proceed_if: :bidding_done?) do
       bidding.pass
     end
+
+    if bidding.deadlock?
+      do_restart!
+    end
   end
 
   def can_trump?(player_uid)
@@ -129,11 +133,17 @@ class ShelemGame
 
   def restart!
     ensure_status!(:done, proceed_if: false) do
-      self.status = :to_deal
-      @bidding = nil
-      @dealing = nil
-      @game = nil
+      do_restart!
     end
+  end
+
+  private
+
+  def do_restart!
+    self.status = :to_deal
+    @bidding = nil
+    @dealing = nil
+    @game = nil
   end
 
   def ensure_status!(status, only_if: true, proceed_if: true)

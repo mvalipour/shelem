@@ -8,8 +8,8 @@ module Shelem
     BID_MAX = 165
     BID_STEP = 5
 
-    def initialize(bids: nil, current_bidder: 0)
-      @bids = bids || ([BID_STEP] * 4).tap{ |arr| arr[current_bidder] = BID_MIN }
+    def initialize(bids: [0, 0, 0, 0], current_bidder: 0)
+      @bids = bids
       @current_bidder = current_bidder
     end
 
@@ -27,11 +27,14 @@ module Shelem
     end
 
     def bid(raise)
-      raise 'INVALID_RAISE' unless raise > 0 && raise % BID_STEP == 0 && (highest_bid + raise) <= BID_MAX
+      raise 'INVALID_RAISE' unless (raise > 0 || (highest_bid.zero? && raise == 0)) && raise % BID_STEP == 0 && (highest_bid + raise) <= BID_MAX
 
-      if (highest_bid + raise) == 165
+      if highest_bid.zero?
+        bids[current_bidder] = BID_MIN + raise
+        move_next
+      elsif (highest_bid + raise) == 165
         # pass everyone else
-        @bids = ([0] * 4).tap{ |arr| arr[current_bidder] = 165 }
+        @bids = ([-1] * 4).tap{ |arr| arr[current_bidder] = 165 }
       else
         bids[current_bidder] = (highest_bid + raise)
         move_next
@@ -47,8 +50,24 @@ module Shelem
       bids.each_with_index.max[1]
     end
 
+    def active_bids
+      bids.count(&:positive?)
+    end
+
+    def awaiting_bids
+      bids.count(&:zero?)
+    end
+
+    def pass_bids
+      bids.count(&:negative?)
+    end
+
     def finished?
-      bids.select(&:positive?).size == 1
+      active_bids == 1 && awaiting_bids == 0
+    end
+
+    def deadlock?
+      pass_bids == 3 && active_bids == 0
     end
 
     private
