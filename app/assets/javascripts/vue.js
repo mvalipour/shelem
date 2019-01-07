@@ -23,7 +23,8 @@ function toggleElement(array, el) {
 default_data = {
   selectedCard: -1,
   selectedCards: [],
-  selectedTrumpCards: []
+  selectedTrumpCards: [],
+  bidAmount: 0
 }
 
 ready(() => {
@@ -54,7 +55,9 @@ ready(() => {
       join() { this.action('join').then(() => document.location.reload()) },
       deal() { this.action('deal') },
       start_bidding() { this.action('start_bidding') },
-      bid(r) { this.action('bid', { raise: r }) },
+      bidUp() { this.bidAmount += 5; },
+      bidDown() { this.bidAmount -= 5; },
+      bid() { this.action('bid', { raise: this.bidAmount }) },
       pass() { this.action('pass') },
       trump() {
         console.log(this.selectedTrumpCards);

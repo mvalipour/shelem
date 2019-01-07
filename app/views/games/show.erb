@@ -112,11 +112,15 @@
         </div>
       </h4>
       <div v-if='game.current_bidder == player.index'>
-        <button v-on:click='bid(20)' v-if='game.highest_bid <= 145'>{{ game.highest_bid + 20 }}</button>
-        <button v-on:click='bid(15)' v-if='game.highest_bid <= 150'>{{ game.highest_bid + 15 }}</button>
-        <button v-on:click='bid(10)' v-if='game.highest_bid <= 155'>{{ game.highest_bid + 10 }}</button>
-        <button v-on:click='bid(5)' v-if='game.highest_bid <= 160'>{{ game.highest_bid + 5 }}</button>
-        <button v-on:click='pass'><%= t('game.bidding.pass') %></button>
+        <div>
+          <button v-on:click='bidUp()' v-if='(game.highest_bid + bidAmount) < 165'>+</button>
+          {{ game.highest_bid + bidAmount }}
+          <button v-on:click='bidDown()' v-if='bidAmount > 0'>-</button>
+        </div>
+        <div>
+          <button v-on:click='bid' v-if='bidAmount > 0'><%= t('game.bidding.bid') %></button>
+          <button v-on:click='pass'><%= t('game.bidding.pass') %></button>
+        </div>
       </div>
     </div>
     <div v-if="game.status == 'to_trump'">
