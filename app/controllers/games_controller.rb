@@ -6,6 +6,8 @@ class GamesController < ApplicationController
   before_action :ensure_admin!, only: ADMIN_ACTIONS
   after_action :publish_event, only: PLAYER_ACTIONS + ADMIN_ACTIONS
 
+  around_action :log_to_statsd
+
   def show
     @game_uid = game_uid
     @game = game
@@ -62,6 +64,14 @@ class GamesController < ApplicationController
   end
 
   private
+
+  def log_to_statsd
+    tags = ['action:%s' % params[:action]]
+    STATSD.time('game.action.time', tags: tags) do
+      STATSD.increment('game.action.count', tags: tags)
+      yield
+    end
+  end
 
   def change_game
     yield(game)

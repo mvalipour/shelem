@@ -8,6 +8,7 @@ gem 'rails', '~> 5.2.2'
 gem 'active_model_serializers', '~> 0.10.2'
 
 gem 'pry-rails'
+gem 'dogstatsd-ruby'
 
 gem 'pg', '>= 0.18', '< 2.0'
 
