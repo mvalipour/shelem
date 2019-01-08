@@ -153,4 +153,8 @@ ul.participants li .desc {
 .card-set .suit-set { white-space: nowrap; display: inline-block; padding-right: 1em;}
 .card-set .played-card {
   display: inline-block; text-align: center;
+  vertical-align: top;
+}
+.card-set .played-card:nth-child(2n) {
+    margin-top: 1.5em;
 }

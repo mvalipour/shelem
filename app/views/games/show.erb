@@ -20,11 +20,17 @@
           </div>
           <span v-if="game.scores" class='info'>
             {{ game.scores[0] }}
+            <span v-if="(game.highest_bidder % 2) == 0">
+              <%= t('game.playing.of') %> {{ game.highest_bid }}
+            </span>
           </span>
         </div>
         <div class='other-team'>
           <span v-if="game.scores" class='info'>
             {{ game.scores[1] }}
+            <span v-if="(game.highest_bidder % 2) == 1">
+              <%= t('game.playing.of') %> {{ game.highest_bid }}
+            </span>
           </span>
           <div v-for='player in game.players.filter((i, ix) => ix % 2 == 1)' class='player-card'>
             <player v-bind:data='player'></player>
