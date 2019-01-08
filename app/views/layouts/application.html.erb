@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= t('title') %></title>
+    <title><%= t('title') %> (<%= t('beta') %>)</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -10,18 +10,20 @@
 
     <%= yield(:head) %>
 
+    <%= favicon_link_tag asset_path('clubs.png') %>
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
 
   <body>
-    <a href='/'>
-      <h1>
+    <h1>
+      <a href='/'>
         <% if @current_user %>
           <img src="<%= "https://api.adorable.io/avatars/64/#{@current_user}.png" %>" />
         <% end %>
         <%= t('title') %>
-      </h1>
-    </a>
+      </a>
+      <span class='secondary'>(<%= t('beta') %>)</span>
+    </h1>
     <%= yield %>
   </body>
 </html>

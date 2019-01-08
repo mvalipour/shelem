@@ -67,8 +67,8 @@
           </div>
         </div>
         <h4 v-if="game.status == 'playing' && game.suit">
+          <%= t('game.playing.game_suit') %>
           <span class='info'>
-            <%= t('game.playing.game_suit') %>
             <span v-bind:class="['pc', 'suit-' + game.suit]"></span>
           </span>
         </h4>
