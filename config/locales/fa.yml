@@ -6,6 +6,8 @@ fa:
     start_new_game: شروع یه بازی جدید
   start_new_game:
     title: شروع یه بازی جدید
+  not_found:
+    title: این بازی وجود ندارد.
   game:
     join: وارد بازی شو
     playing:

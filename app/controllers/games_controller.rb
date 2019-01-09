@@ -9,6 +9,8 @@ class GamesController < ApplicationController
   around_action :log_to_statsd
 
   def show
+    return render :not_found unless game
+
     @game_uid = game_uid
     @game = game
     @view_data = view_data
@@ -104,7 +106,7 @@ class GamesController < ApplicationController
   end
 
   def game
-    @_game ||= ShelemGame.find!(game_uid)
+    @_game ||= ShelemGame.find(game_uid)
   end
 
   def ensure_user_uid
