@@ -24,7 +24,8 @@ default_data = {
   selectedCard: -1,
   selectedCards: [],
   selectedTrumpCards: [],
-  bidAmount: 0
+  bidAmount: 0,
+  flipped: false
 }
 
 ready(() => {

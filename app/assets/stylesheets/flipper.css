@@ -1,0 +1,62 @@
+/* entire container, keeps perspective */
+.flip-container {
+	perspective: 1000px;
+	display: inline-block;
+}
+
+.flip-container.selected {
+  transform: scale(1.3);
+  background: white;
+}
+
+.flip-container.flipped .flipper {
+	transform: rotateY(180deg);
+}
+
+.flip-container, .front, .back {
+	width: 3.5em;
+  height: 4.5em;
+}
+
+/* flip speed goes here */
+.flipper {
+	transition: 0.4s;
+	transform-style: preserve-3d;
+
+	position: relative;
+}
+
+.flip-container:nth-child(0) .flipper { transition-delay: 0.0s; }
+.flip-container:nth-child(1) .flipper { transition-delay: 0.1s; }
+.flip-container:nth-child(2) .flipper { transition-delay: 0.2s; }
+.flip-container:nth-child(3) .flipper { transition-delay: 0.3s; }
+.flip-container:nth-child(4) .flipper { transition-delay: 0.4s; }
+.flip-container:nth-child(5) .flipper { transition-delay: 0.5s; }
+.flip-container:nth-child(6) .flipper { transition-delay: 0.6s; }
+.flip-container:nth-child(7) .flipper { transition-delay: 0.7s; }
+.flip-container:nth-child(8) .flipper { transition-delay: 0.8s; }
+.flip-container:nth-child(9) .flipper { transition-delay: 0.9s; }
+.flip-container:nth-child(10) .flipper { transition-delay: 1.0s; }
+.flip-container:nth-child(11) .flipper { transition-delay: 1.1s; }
+
+/* hide back of pane during swap */
+.front, .back {
+	backface-visibility: hidden;
+	overflow: hidden;
+
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+/* front pane, placed above back */
+.front {
+	z-index: 2;
+	/* for firefox 31 */
+	transform: rotateY(0deg);
+}
+
+/* back, initially hidden pane */
+.back {
+	transform: rotateY(180deg);
+}

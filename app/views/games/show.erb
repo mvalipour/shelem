@@ -63,23 +63,24 @@
         <div class='card-set'>
           <div v-for='(number, index) in game.played_set' class='played-card'>
             <player v-bind:class='{ current: game.next_to_play == index }' v-bind:data='game.players[(game.round_lead + index) % 4]'></player>
-            <div v-bind:class="['pc', 'no-'+number]"></div>
+            <card v-bind:number="number"></card>
           </div>
         </div>
         <h4 v-if="game.status == 'playing' && game.suit">
           <%= t('game.playing.game_suit') %>
           <span class='info'>
-            <span v-bind:class="['pc', 'suit-' + game.suit]"></span>
+            <span v-bind:class="['suit-' + game.suit]"></span>
           </span>
         </h4>
       </div>
       <div v-if='game.widow_set && game.widow_set.length > 0'>
         <h4><%= t('game.playing.widow_set') %></h4>
         <div class='card-set'>
-          <span v-for='number in game.widow_set.flat()'>
-            <span v-if="game.status == 'to_trump'" v-bind:class="['pc', 'no-'+number, selectedTrumpCards.indexOf(number) >= 0 ? 'selected' : '']" v-on:click='selectTrumpCard(number)'></span>
-            <span v-else class='pc'></span>
-          </span>
+          <card v-for='number in game.widow_set'
+                v-bind:number="game.status == 'to_trump' ? number : null"
+                v-bind:class="{ selected: selectedTrumpCards.indexOf(number) >= 0 }"
+                @click.native='selectTrumpCard(number)'>
+          </card>
         </div>
       </div>
       <div v-if='player.cards'>
@@ -89,10 +90,14 @@
         </h4>
         <div class='card-set'>
           <span class='suit-set' v-for='cards in player.cards'>
-            <span v-for='number in cards' v-bind:class="['pc', 'no-'+number, (selectedCard == number || selectedCards.indexOf(number) >= 0) ? 'selected' : '', cardEnabled(number) ? '' : 'disabled']" v-on:click='selectCard(number)'>
-            </span>
+            <card v-for='number in cards'
+                  v-bind:number='number'
+                  v-bind:class="{ flipped: flipped, selected: (selectedCard == number || selectedCards.indexOf(number) >= 0), disabled: !cardEnabled(number) }"
+                  @click.native='selectCard(number)'>
+            </card>
           </span>
         </div>
+        <button v-on:click='flipped = !flipped'>Flip all!</button>
       </div>
     </div>
     <div v-if="game.status == 'to_bid'">
