@@ -25,7 +25,7 @@ class ShelemGameSerializer < ActiveModel::Serializer
       total_scores: object.total_scores,
       total_games: object.total_games,
 
-      widow_set: (dealing.widow_set.to_a.flatten if dealing),
+      widow_set: (dealing.widow_set.to_a if dealing),
 
       bids: (bidding.bids if bidding),
       current_bidder: (bidding.current_bidder if bidding),

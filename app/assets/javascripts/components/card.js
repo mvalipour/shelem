@@ -9,7 +9,7 @@ Vue.component('card', {
           <div v-bind:class="['pc', typeof number === 'number' ? 'no-'+number : '']"></div>
         </div>
         <div class='back'>
-          <div class='pc'></div>
+          <div class='pc holder'></div>
         </div>
       </div>
     </div>

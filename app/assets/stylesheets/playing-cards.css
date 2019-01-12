@@ -7,6 +7,16 @@
 
 .pc.no-null { color: #aaa; }
 .pc.disabled:after { filter: opacity(0.5); }
+.pc.holder:after {
+  content: '';
+  border: dashed 1px;
+  top: 0.02em;
+  left: 0.02em;
+  right: 0.08em;
+  bottom: 0.07em;
+  position: absolute;
+  border-radius: 0.05em;
+}
 
 /* suits */
 .suit-undefined:after   { content: "\22A1"; font-size: 2em; }

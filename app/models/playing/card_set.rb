@@ -38,7 +38,7 @@ module Playing
     end
 
     def to_a
-      (0..51).to_a.in_groups_of(13).map{ |g| g.select(&method(:include?)) }
+      (0..51).to_a.select(&method(:include?))
     end
   end
 end

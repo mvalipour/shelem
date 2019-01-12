@@ -20,19 +20,31 @@ function toggleElement(array, el) {
   }
 }
 
-default_data = {
-  selectedCard: -1,
-  selectedCards: [],
-  selectedTrumpCards: [],
-  bidAmount: 0,
-  flipped: false
-}
-
 ready(() => {
-  const data = meta('vue-data') || '{}'
   const app = new Vue({
     el: '#vue-app',
-    data: Object.assign(JSON.parse(data), default_data),
+    data: {
+      game: {},
+      player: {},
+      selectedCard: -1,
+      selectedCards: [],
+      selectedTrumpCards: [],
+      bidAmount: 0,
+      playerCardSetHidden: true,
+      widowSetHidden: true
+    },
+    watch: {
+      'player.cards': function(value) {
+        if(!!value) {
+          setTimeout(() => this.playerCardSetHidden = false, 300);
+        }
+      },
+      'game.widow_set': function (value) {
+        if(this.game.status == 'to_trump') {
+          setTimeout(() => this.widowSetHidden = false, 300);
+        }
+      }
+    },
     methods: {
       cardEnabled(number) {
         if(typeof this.game.round_suit_i !== 'number') { return true; }
@@ -41,8 +53,8 @@ ready(() => {
           true;
       },
       changeData(newdata) {
-        Object.keys(this.$data).forEach(key => this.$data[key] = null);
-        Object.entries(Object.assign(newdata, default_data)).forEach(entry => Vue.set(this.$data, entry[0], entry[1]));
+        Object.keys(newdata).forEach(key => this.$data[key] = null);
+        Object.entries(newdata).forEach(entry => Vue.set(this.$data, entry[0], entry[1]));
       },
       action(type, data = {}) {
         return axios.post(
@@ -100,5 +112,12 @@ ready(() => {
       },
     }
   });
+
+  // load initial data
+  const data = meta('vue-data');
+  if(data) {
+    app.changeData(JSON.parse(data));
+  }
+
   window.VUE_APP = app;
 });
