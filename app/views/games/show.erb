@@ -51,49 +51,56 @@
         </div>
       </div>
     </div>
-    <div v-if="game.status == 'to_deal'">
-      <h4><%= t('game.to_deal.title') %></h4>
-      <button v-if='player.admin' v-on:click='deal'><%= t('game.to_deal.deal') %></button>
-    </div>
     <div>
-      <div v-if='game.played_set && game.played_set.length > 0'>
+      <div v-if="typeof game.next_to_play === 'number'">
         <h4>
           <%= t('game.playing.played_set') %>
         </h4>
         <div class='card-set'>
-          <div v-for='(number, index) in game.played_set' class='played-card'>
-            <player v-bind:class='{ current: game.next_to_play == index }' v-bind:data='game.players[(game.round_lead + index) % 4]'></player>
-            <div v-bind:class="['pc', 'no-'+number]"></div>
+          <div v-for='(_, index) in new Array(4)' class='played-card'>
+            <player v-bind:class='{ current: game.next_to_play == (game.current_round.lead + index) % 4 }' v-bind:data='game.players[(game.current_round.lead + index) % 4]'></player>
+            <card v-bind:number="game.current_round.cards[index]"
+                  v-bind:class="{ flipped: playedSetHidden[index] }">
+            </card>
           </div>
         </div>
         <h4 v-if="game.status == 'playing' && game.suit">
           <%= t('game.playing.game_suit') %>
           <span class='info'>
-            <span v-bind:class="['pc', 'suit-' + game.suit]"></span>
+            <span v-bind:class="['suit-' + game.suit]"></span>
           </span>
         </h4>
+      </div>
+      <div v-if="game.status != 'to_name'">
+        <h4>
+          <%= t('game.playing.your_hand') %>
+          <span v-if="game.status == 'playing' && game.next_to_play == player.index">
+            (<%= t('game.playing.your_turn') %>)
+          </span>
+        </h4>
+        <div class='card-set'>
+          <card v-for='number in (player.cards || new Array(12))'
+                v-bind:number='number'
+                v-bind:class="{ flipped: playerCardSetHidden, selected: (selectedCard == number || selectedCards.indexOf(number) >= 0), disabled: !cardEnabled(number) }"
+                @click.native='selectCard(number)'>
+          </card>
+        </div>
       </div>
       <div v-if='game.widow_set && game.widow_set.length > 0'>
         <h4><%= t('game.playing.widow_set') %></h4>
         <div class='card-set'>
-          <span v-for='number in game.widow_set.flat()'>
-            <span v-if="game.status == 'to_trump'" v-bind:class="['pc', 'no-'+number, selectedTrumpCards.indexOf(number) >= 0 ? 'selected' : '']" v-on:click='selectTrumpCard(number)'></span>
-            <span v-else class='pc'></span>
-          </span>
+          <card v-for='number in game.widow_set'
+                v-bind:number='number'
+                v-bind:back="null"
+                v-bind:class="{ flipped: widowSetHidden, selected: selectedTrumpCards.indexOf(number) >= 0 }"
+                @click.native='selectTrumpCard(number)'>
+          </card>
         </div>
       </div>
-      <div v-if='player.cards'>
-        <h4>
-          <%= t('game.playing.your_hand') %>
-          <span v-if="game.status == 'playing' && game.next_to_play == player.index">(<%= t('game.playing.your_turn') %>)</span>
-        </h4>
-        <div class='card-set'>
-          <span class='suit-set' v-for='cards in player.cards'>
-            <span v-for='number in cards' v-bind:class="['pc', 'no-'+number, (selectedCard == number || selectedCards.indexOf(number) >= 0) ? 'selected' : '', cardEnabled(number) ? '' : 'disabled']" v-on:click='selectCard(number)'>
-            </span>
-          </span>
-        </div>
-      </div>
+    </div>
+    <div v-if="game.status == 'to_deal'">
+      <h4><%= t('game.to_deal.title') %></h4>
+      <button v-if='player.admin' v-on:click='deal'><%= t('game.to_deal.deal') %></button>
     </div>
     <div v-if="game.status == 'to_bid'">
       <h4><%= t('game.to_bid.title') %></h4>

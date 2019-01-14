@@ -1,25 +1,29 @@
 .pc:after {
   content: "\1F0A0";
   font-size: 5em;
-  line-height: 100%;
+  line-height: 0.9em;
   vertical-align: middle;
-}
-
-.pc.selected {
-  transform: scale(1.3);
-  display: inline-block;
-  background: white;
 }
 
 .pc.no-null { color: #aaa; }
 .pc.disabled:after { filter: opacity(0.5); }
+.pc.holder:after {
+  content: '';
+  border: dashed 1px;
+  top: 0.02em;
+  left: 0.02em;
+  right: 0.08em;
+  bottom: 0.07em;
+  position: absolute;
+  border-radius: 0.05em;
+}
 
 /* suits */
-.pc.suit-undefined:after   { content: "\22A1"; font-size: 2em; }
-.pc.suit-hearts:after   { content: "\2665"; font-size: 2em; color: indianred; }
-.pc.suit-spades:after   { content: "\2660"; font-size: 2em; }
-.pc.suit-diamonds:after { content: "\2666"; font-size: 2em; color: indianred; }
-.pc.suit-clubs:after    { content: "\2663"; font-size: 2em; }
+.suit-undefined:after   { content: "\22A1"; font-size: 2em; }
+.suit-hearts:after   { content: "\2665"; font-size: 2em; color: indianred; }
+.suit-spades:after   { content: "\2660"; font-size: 2em; }
+.suit-diamonds:after { content: "\2666"; font-size: 2em; color: indianred; }
+.suit-clubs:after    { content: "\2663"; font-size: 2em; }
 
 /* hearts */
 .pc.no-0:after  { content: "\1F0B2"; color: indianred; }

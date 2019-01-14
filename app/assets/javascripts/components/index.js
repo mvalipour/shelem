@@ -1,1 +1,2 @@
 require('./player')
+require('./card')
