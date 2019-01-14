@@ -37,9 +37,9 @@ ready(() => {
     setters: {
       'game.current_round': function (value, newData) {
         if(this.game.current_round &&
-          this.game.current_round.cards.length > 0 &&
+          this.game.current_round.size > 0 &&
           newData.game.last_round &&
-          value.cards.length == 0) {
+          value.size == 0) {
           setTimeout(() => this.game.current_round = value, 2000);
           Vue.set(this.game, 'current_round', newData.game.last_round);
         } else {

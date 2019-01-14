@@ -19,7 +19,6 @@ h1 img {
   outline: dashed 1px #777;
 }
 
-.player-card { margin-bottom: 0.5em;}
 h4 { margin: 0; font-weight: normal; }
 h4 {
   position: relative;
@@ -159,4 +158,25 @@ ul.participants li .desc {
 }
 .card-set .played-card:nth-child(2n) {
     margin-top: 1.5em;
+}
+
+.player-pos-group {
+  text-align: center;
+}
+.player-pos-group .player-pos:nth-child(1) {
+  margin-left: 3em;
+}
+
+.player-pos-group .player-pos {
+  position: relative;
+  display: inline-block;
+}
+.player-pos-group .player-pos .player-card {
+  position: absolute;
+  top: 1.1em;
+  right: -2.5em;
+}
+.player-pos-group .player-pos:nth-child(2) .player-card {
+  left: -3em;
+  right: auto;
 }

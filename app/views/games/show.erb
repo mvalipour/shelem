@@ -56,13 +56,16 @@
         <h4>
           <%= t('game.playing.played_set') %>
         </h4>
-        <div class='card-set'>
-          <div v-for='(_, index) in new Array(4)' class='played-card'>
-            <player v-bind:class='{ current: game.next_to_play == (game.current_round.lead + index) % 4 }' v-bind:data='game.players[(game.current_round.lead + index) % 4]'></player>
-            <card v-bind:number="game.current_round.cards[index]"
-                  v-bind:class="{ flipped: playedSetHidden[index] }">
+
+        <div class='player-pos-group' v-for='set in [[0, 3], [1, 2]]'>
+          <span class='player-pos' v-for='ix in set'>
+            <player v-bind:data='game.players[ix]'
+                    v-bind:class='{ current: game.next_to_play == ix }'>
+            </player>
+            <card v-bind:number="game.current_round.cards[ix]"
+                  v-bind:class="{ flipped: playedSetHidden[ix] }">
             </card>
-          </div>
+          </span>
         </div>
         <h4 v-if="game.status == 'playing' && game.suit">
           <%= t('game.playing.game_suit') %>
