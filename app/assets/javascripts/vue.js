@@ -68,6 +68,7 @@ ready(() => {
     },
     methods: {
       cardEnabled(number) {
+        if(!this.game.current_round) { return true; }
         if(typeof this.game.current_round.suit_i !== 'number') { return true; }
         return this.player.cards[this.game.current_round.suit_i].length > 0 ?
           Math.floor(number / 13) ==  this.game.current_round.suit_i :

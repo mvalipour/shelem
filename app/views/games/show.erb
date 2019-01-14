@@ -51,10 +51,6 @@
         </div>
       </div>
     </div>
-    <div v-if="game.status == 'to_deal'">
-      <h4><%= t('game.to_deal.title') %></h4>
-      <button v-if='player.admin' v-on:click='deal'><%= t('game.to_deal.deal') %></button>
-    </div>
     <div>
       <div v-if="typeof game.next_to_play === 'number'">
         <h4>
@@ -75,16 +71,6 @@
           </span>
         </h4>
       </div>
-      <div v-if='game.widow_set && game.widow_set.length > 0'>
-        <h4><%= t('game.playing.widow_set') %></h4>
-        <div class='card-set'>
-          <card v-for='number in game.widow_set'
-                v-bind:number='number'
-                v-bind:class="{ flipped: widowSetHidden, selected: selectedTrumpCards.indexOf(number) >= 0 }"
-                @click.native='selectTrumpCard(number)'>
-          </card>
-        </div>
-      </div>
       <div v-if="game.status != 'to_name'">
         <h4>
           <%= t('game.playing.your_hand') %>
@@ -100,6 +86,21 @@
           </card>
         </div>
       </div>
+      <div v-if='game.widow_set && game.widow_set.length > 0'>
+        <h4><%= t('game.playing.widow_set') %></h4>
+        <div class='card-set'>
+          <card v-for='number in game.widow_set'
+                v-bind:number='number'
+                v-bind:back="null"
+                v-bind:class="{ flipped: widowSetHidden, selected: selectedTrumpCards.indexOf(number) >= 0 }"
+                @click.native='selectTrumpCard(number)'>
+          </card>
+        </div>
+      </div>
+    </div>
+    <div v-if="game.status == 'to_deal'">
+      <h4><%= t('game.to_deal.title') %></h4>
+      <button v-if='player.admin' v-on:click='deal'><%= t('game.to_deal.deal') %></button>
     </div>
     <div v-if="game.status == 'to_bid'">
       <h4><%= t('game.to_bid.title') %></h4>
