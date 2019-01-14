@@ -35,9 +35,19 @@ class ShelemGameSerializer < ActiveModel::Serializer
       scores: (game.game_scores if game),
       suit: (game.game_suit if game),
       next_to_play: (game.next_to_play if game),
-      last_round: (game.last_round&.data if game),
-      current_round: (game.current_round.data if game),
+      last_round: (round_data(game.last_round) if game),
+      current_round: (round_data(game.current_round) if game),
     }.compact
+  end
+
+  def round_data(round)
+    return unless round
+    {
+      lead: round.lead,
+      suit_i: round.suit_i,
+      size: round.cards.size,
+      cards: (0..3).map{ |i| round.cards[(i - round.lead) % 4]&.to_i },
+    }
   end
 
   def player_data
