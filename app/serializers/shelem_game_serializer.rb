@@ -34,10 +34,9 @@ class ShelemGameSerializer < ActiveModel::Serializer
 
       scores: (game.game_scores if game),
       suit: (game.game_suit if game),
-      round_lead: (game.round_lead if game),
-      round_suit_i: (game.round_suit_i if game),
       next_to_play: (game.next_to_play if game),
-      played_set: (game.round_set.map(&:to_i) + ([nil] * (4 - game.round_set.size)) if game)
+      last_round: (game.last_round&.data if game),
+      current_round: (game.current_round.data if game),
     }.compact
   end
 

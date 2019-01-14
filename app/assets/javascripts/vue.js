@@ -31,7 +31,21 @@ ready(() => {
       selectedTrumpCards: [],
       bidAmount: 0,
       playerCardSetHidden: true,
-      widowSetHidden: true
+      widowSetHidden: true,
+      playedSetHidden: [true, true, true, true]
+    },
+    setters: {
+      'game.current_round': function (value, newData) {
+        if(this.game.current_round &&
+          this.game.current_round.cards.length > 0 &&
+          newData.game.last_round &&
+          value.cards.length == 0) {
+          setTimeout(() => this.game.current_round = value, 2000);
+          Vue.set(this.game, 'current_round', newData.game.last_round);
+        } else {
+          Vue.set(this.game, 'current_round', value);
+        }
+      }
     },
     watch: {
       'player.cards': function(value) {
@@ -43,18 +57,38 @@ ready(() => {
         if(this.game.status == 'to_trump') {
           setTimeout(() => this.widowSetHidden = false, 300);
         }
+      },
+      'game.current_round.cards': function (value) {
+        if(!value) { return; }
+
+        setTimeout(() => {
+          this.playedSetHidden = this.playedSetHidden.map((_, ix) => typeof value[ix] !== 'number');
+        }, 50);
       }
     },
     methods: {
       cardEnabled(number) {
-        if(typeof this.game.round_suit_i !== 'number') { return true; }
-        return this.player.cards[this.game.round_suit_i].length > 0 ?
-          Math.floor(number / 13) ==  this.game.round_suit_i :
+        if(typeof this.game.current_round.suit_i !== 'number') { return true; }
+        return this.player.cards[this.game.current_round.suit_i].length > 0 ?
+          Math.floor(number / 13) ==  this.game.current_round.suit_i :
           true;
       },
-      changeData(newdata) {
-        Object.keys(newdata).forEach(key => this.$data[key] = null);
-        Object.entries(newdata).forEach(entry => Vue.set(this.$data, entry[0], entry[1]));
+      changeData(newData) {
+        ['game', 'player'].forEach(parentKey => this.changeDataParent(parentKey, newData));
+      },
+      changeDataParent(parentKey, newData) {
+        const keys = Object.keys(newData[parentKey]);
+        keys.forEach(key => this.changeDataKey(parentKey, key, newData));
+      },
+      changeDataKey(parentKey, key, newData) {
+        let value = newData[parentKey][key];
+        const setter = this.$options.setters[parentKey + '.' + key];
+        if (setter) {
+          setter.apply(this, [value, newData]);
+        }
+        else {
+          Vue.set(this.$data[parentKey], key, value);
+        }
       },
       action(type, data = {}) {
         return axios.post(
@@ -70,7 +104,7 @@ ready(() => {
       start_bidding() { this.action('start_bidding') },
       bidUp() { this.bidAmount += 5; },
       bidDown() { this.bidAmount -= 5; },
-      bid() { this.action('bid', { raise: this.bidAmount }) },
+      bid() { this.action('bid', { raise: this.bidAmount }).then(() => this.bidAmount = 0) },
       pass() { this.action('pass') },
       trump() {
         console.log(this.selectedTrumpCards);
@@ -86,7 +120,9 @@ ready(() => {
         })
       },
       start_game() { this.action('start_game') },
-      play() { this.action('play', { card: this.selectedCard }) },
+      play() {
+        this.action('play', { card: this.selectedCard });
+      },
       restart() { this.action('restart') },
 
       selectCard(n) {
