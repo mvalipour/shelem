@@ -4,7 +4,7 @@ class ShelemGame
   include Enums
 
   PROPS = %i(admin_uid status_i total_scores total_games players dealing bidding game)
-  STATUSES = %i(to_name to_deal to_bid bidding to_trump to_play playing done)
+  STATUSES = %i(to_name to_deal bidding to_trump playing done)
 
   enum status: STATUSES
 
@@ -52,13 +52,12 @@ class ShelemGame
   def deal!
     ensure_status!(:to_deal) do
       @dealing = Shelem::Dealing.new.tap(&:deal)
+      start_bidding!
     end
   end
 
   def start_bidding!
-    ensure_status!(:to_bid) do
-      @bidding = Shelem::Bidding.new(current_bidder: total_games % 4)
-    end
+    @bidding = Shelem::Bidding.new(current_bidder: total_games % 4)
   end
 
   def bidding_done?
@@ -96,19 +95,14 @@ class ShelemGame
   def trump!(player_uid, cards_in, cards_out)
     ensure_status!(:to_trump, only_if: can_trump?(player_uid)) do
       dealing.trump(bidding.current_bidder, cards_in, cards_out)
+      start_game!
     end
-  end
-
-  def can_start_game?
-    dealing&.trumped?
   end
 
   def start_game!
-    ensure_status!(:to_play, only_if: :can_start_game?) do
-      @game = Shelem::Game.new(
-        current_round: [bidding.highest_bidder]
-      )
-    end
+    @game = Shelem::Game.new(
+      current_round: [bidding.highest_bidder]
+    )
   end
 
   def can_play?(player_uid)
